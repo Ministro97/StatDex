@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>% stat</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    
+    
+    body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2em;
+  color: #00e6e6;
+  text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6;
+  margin: 20px 0;
+}
+
+label, input, select, button {
+  font-size: 1em;
+  margin: 10px;
+}
+
+input, select {
+  background-color: #1e1e1e;
+  border: 2px solid #00e6e6;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #00e6e6;
+  width: calc(100% - 40px);
+  max-width: 400px;
+  margin: 10px 0;
+}
+
+button {
+  background-color: #00e6e6;
+  border: none;
+  color: #121212;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00e6e6;
+  transition: background-color 0.3s ease;
+  width: calc(100% - 40px);
+  max-width: 400px;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: #00cccc;
+}
+
+#results, #userStatsInput {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #00e6e6;
+}
+
+th {
+  background-color: #00e6e6;
+  color: #121212;
+}
+
+td {
+  background-color: #1e1e1e;
+}
+
+canvas {
+  margin-top: 20px;
+  box-shadow: 0 0 20px #00e6e6;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  label, input, select, button {
+    font-size: 0.9em;
+  }
+
+  input, select {
+    width: calc(100% - 20px);
+  }
+
+  button {
+    padding: 10px;
+    width: calc(100% - 20px);
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+}
+
+
+    
+    
+    
+  </style>
+  
+  
+  
+</head>
+<body>
+  <h1>% stat</h1>
+  <input type="text" id="pokemonName" placeholder="Inserisci il nome del tuo Pokémon">
+  <label for="pokemonLevel">Level:</label>
+<select id="pokemonLevel">
+  
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="13">13</option>
+  <option value="14">14</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+  <option value="24">24</option>
+  <option value="25">25</option>
+  <option value="26">26</option>
+  <option value="27">27</option>
+  <option value="28">28</option>
+  <option value="29">29</option>
+  <option value="30">30</option>
+  <option value="31">31</option>
+  <option value="32">32</option>
+  <option value="33">33</option>
+  <option value="34">34</option>
+  <option value="35">35</option>
+  <option value="36">36</option>
+  <option value="37">37</option>
+  <option value="38">38</option>
+  <option value="39">39</option>
+  <option value="40">40</option>
+  <option value="41">41</option>
+  <option value="42">42</option>
+  <option value="43">43</option>
+  <option value="44">44</option>
+  <option value="45">45</option>
+  <option value="46">46</option>
+  <option value="47">47</option>
+  <option value="48">48</option>
+  <option value="49">49</option>
+  <option value="50">50</option>
+  <option value="51">51</option>
+  <option value="52">52</option>
+  <option value="53">53</option>
+  <option value="54">54</option>
+  <option value="55">55</option>
+  <option value="56">56</option>
+  <option value="57">57</option>
+  <option value="58">58</option>
+  <option value="59">59</option>
+  <option value="60">60</option>
+  <option value="61">61</option>
+  <option value="62">62</option>
+  <option value="63">63</option>
+  <option value="64">64</option>
+  <option value="65">65</option>
+  <option value="66">66</option>
+  <option value="67">67</option>
+  <option value="68">68</option>
+  <option value="69">69</option>
+  <option value="70">70</option>
+  <option value="71">71</option>
+  <option value="72">72</option>
+  <option value="73">73</option>
+  <option value="74">74</option>
+  <option value="75">75</option>
+  <option value="76">76</option>
+  <option value="77">77</option>
+  <option value="78">78</option>
+  <option value="79">79</option>
+  <option value="80">80</option>
+  <option value="81">81</option>
+  <option value="82">82</option>
+  <option value="83">83</option>
+  <option value="84">84</option>
+  <option value="85">85</option>
+  <option value="86">86</option>
+  <option value="87">87</option>
+  <option value="88">88</option>
+  <option value="89">89</option>
+  <option value="90">90</option>
+  <option value="91">91</option>
+  <option value="92">92</option>
+  <option value="93">93</option>
+  <option value="94">94</option>
+  <option value="95">95</option>
+  <option value="96">96</option>
+  <option value="97">97</option>
+  <option value="98">98</option>
+  <option value="99">99</option>
+  <option value="100">100</option>
+</select>
+
+  <label for="pokemonNature">Nature:</label>
+  <select id="pokemonNature">
+  <option value="hardy">Hardy</option>
+  <option value="lonely">Lonely</option>
+  <option value="brave">Brave</option>
+  <option value="adamant">Adamant</option>
+  <option value="naughty">Naughty</option>
+  <option value="bold">Bold</option>
+  <option value="docile">Docile</option>
+  <option value="relaxed">Relaxed</option>
+  <option value="impish">Impish</option>
+  <option value="lax">Lax</option>
+  <option value="timid">Timid</option>
+  <option value="hasty">Hasty</option>
+  <option value="serious">Serious</option>
+  <option value="jolly">Jolly</option>
+  <option value="naive">Naive</option>
+  <option value="modest">Modest</option>
+  <option value="mild">Mild</option>
+  <option value="quiet">Quiet</option>
+  <option value="bashful">Bashful</option>
+  <option value="rash">Rash</option>
+  <option value="calm">Calm</option>
+  <option value="gentle">Gentle</option>
+  <option value="sassy">Sassy</option>
+  <option value="careful">Careful</option>
+  <option value="quirky">Quirky</option>
+</select>
+
+  <button onclick="calculateStats()">Calculate Stats</button>
+  <button onclick="location.reload()">Reset</button>
+  <div id="userStatsInput"></div>
+  <div id="results"></div>
+  <canvas id="statsChart" width="400" height="200"></canvas>
+
+  <script>
+    async function getPokemonData(pokemon) {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`);
+      return response.json();
+    }
+
+    function calculateStat(base, iv, ev, level, natureMultiplier) {
+      return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100 + 5) * natureMultiplier);
+    }
+
+    function calculateHP(base, iv, ev, level) {
+      return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level / 100) + level + 10);
+    }
+
+    function calculatePercentage(current, min, max) {
+      return ((current - min) / (max - min)) * 100;
+    }
+
+    function getNatureMultipliers(nature) {
+  const multipliers = {
+    hardy: { increase: { stat: 'none', value: 1.0 }, decrease: { stat: 'none', value: 1.0 } },
+    lonely: { increase: { stat: 'attack', value: 1.1 }, decrease: { stat: 'defense', value: 0.9 } },
+    brave: { increase: { stat: 'attack', value: 1.1 }, decrease: { stat: 'speed', value: 0.9 } },
+    adamant: { increase: { stat: 'attack', value: 1.1 }, decrease: { stat: 'special-attack', value: 0.9 } },
+    naughty: { increase: { stat: 'attack', value: 1.1 }, decrease: { stat: 'special-defense', value: 0.9 } },
+    bold: { increase: { stat: 'defense', value: 1.1 }, decrease: { stat: 'attack', value: 0.9 } },
+    docile: { increase: { stat: 'none', value: 1.0 }, decrease: { stat: 'none', value: 1.0 } },
+    relaxed: { increase: { stat: 'defense', value: 1.1 }, decrease: { stat: 'speed', value: 0.9 } },
+    impish: { increase: { stat: 'defense', value: 1.1 }, decrease: { stat: 'special-attack', value: 0.9 } },
+    lax: { increase: { stat: 'defense', value: 1.1 }, decrease: { stat: 'special-defense', value: 0.9 } },
+    timid: { increase: { stat: 'speed', value: 1.1 }, decrease: { stat: 'attack', value: 0.9 } },
+    hasty: { increase: { stat: 'speed', value: 1.1 }, decrease: { stat: 'defense', value: 0.9 } },
+    serious: { increase: { stat: 'none', value: 1.0 }, decrease: { stat: 'none', value: 1.0 } },
+    jolly: { increase: { stat: 'speed', value: 1.1 }, decrease: { stat: 'special-attack', value: 0.9 } },
+    naive: { increase: { stat: 'speed', value: 1.1 }, decrease: { stat: 'special-defense', value: 0.9 } },
+    modest: { increase: { stat: 'special-attack', value: 1.1 }, decrease: { stat: 'attack', value: 0.9 } },
+    mild: { increase: { stat: 'special-attack', value: 1.1 }, decrease: { stat: 'defense', value: 0.9 } },
+    quiet: { increase: { stat: 'special-attack', value: 1.1 }, decrease: { stat: 'speed', value: 0.9 } },
+    bashful: { increase: { stat: 'none', value: 1.0 }, decrease: { stat: 'none', value: 1.0 } },
+    rash: { increase: { stat: 'special-attack', value: 1.1 }, decrease: { stat: 'special-defense', value: 0.9 } },
+    calm: { increase: { stat: 'special-defense', value: 1.1 }, decrease: { stat: 'attack', value: 0.9 } },
+    gentle: { increase: { stat: 'special-defense', value: 1.1 }, decrease: { stat: 'defense', value: 0.9 } },
+    sassy: { increase: { stat: 'special-defense', value: 1.1 }, decrease: { stat: 'speed', value: 0.9 } },
+    careful: { increase: { stat: 'special-defense', value: 1.1 }, decrease: { stat: 'special-attack', value: 0.9 } },
+    quirky: { increase: { stat: 'none', value: 1.0 }, decrease: { stat: 'none', value: 1.0 } }
+  };
+  return multipliers[nature] || multipliers.neutral;
+}
+
+
+    async function calculateStats() {
+      const pokemonName = document.getElementById('pokemonName').value;
+      const level = parseInt(document.getElementById('pokemonLevel').value);
+      const nature = document.getElementById('pokemonNature').value;
+      const data = await getPokemonData(pokemonName);
+      const baseStats = data.stats.map(stat => stat.base_stat);
+      const natureMultipliers = getNatureMultipliers(nature);
+
+      const maxIV = 31;
+      const minIV = 0;
+      const maxEV = 252;
+      const minEV = 0;
+
+      const results = baseStats.map((base, index) => {
+        const statName = data.stats[index].stat.name;
+        const increaseMultiplier = statName === natureMultipliers.increase.stat ? natureMultipliers.increase.value : 1.0;
+        const decreaseMultiplier = statName === natureMultipliers.decrease.stat ? natureMultipliers.decrease.value : 1.0;
+        const maxStat = calculateStat(base, maxIV, maxEV, level, increaseMultiplier);
+        const minStat = calculateStat(base, minIV, minEV, level, decreaseMultiplier);
+        return { base, maxStat, minStat, increaseMultiplier, decreaseMultiplier };
+      });
+
+      const hpIndex = 0;
+      results[hpIndex].maxStat = calculateHP(baseStats[hpIndex], maxIV, maxEV, level);
+      results[hpIndex].minStat = calculateHP(baseStats[hpIndex], minIV, minEV, level);
+
+      let userStatsInputHTML = '<h2>Enter your Pokémon\'s current stats</h2>';
+      data.stats.forEach((stat, index) => {
+        userStatsInputHTML += `
+          <label for="stat${index}">${stat.stat.name}:</label>
+          <input type="number" id="stat${index}" placeholder="Enter ${stat.stat.name}">
+          <br>
+        `;
+      });
+      userStatsInputHTML += '<button onclick="calculatePercentages()">Calculate Percentages</button>';
+      document.getElementById('userStatsInput').innerHTML = userStatsInputHTML;
+
+
+
+
+      window.calculatePercentages = function() {
+        
+        
+        let percentagesHTML = '<h2>Stat Percentages</h2><table><tr><th>Stat</th><th>Percentage</th><th>Nature Multiplier</th></tr>';
+        const percentages = [];
+        const labels = [];
+        data.stats.forEach((stat, index) => {
+          const currentStat = parseInt(document.getElementById(`stat${index}`).value);
+          const percentage = calculatePercentage(currentStat, results[index].minStat, results[index].maxStat);
+          const natureMultiplier = results[index].increaseMultiplier !== 1.0 ? results[index].increaseMultiplier : results[index].decreaseMultiplier;
+          percentagesHTML += `<tr><td>${stat.stat.name}</td><td>${percentage.toFixed(2)}%</td><td>${natureMultiplier}</td></tr>`;
+          percentages.push(percentage.toFixed(2));
+          labels.push(stat.stat.name);
+        });
+        percentagesHTML += '</table>';
+        document.getElementById('results').innerHTML = percentagesHTML;
+
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Stat Percentages',
+              data: percentages,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      };
+    }
+    
+    
+    
+    
+    
+  </script>
+</body>
+</html>
