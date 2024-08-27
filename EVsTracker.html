@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore EVs Pokémon</title>
+    <style>
+        body {
+            margin-left: 20px;
+        }
+        
+        label,
+        input,
+        select {
+            display: block;
+            margin: 10px 0;
+        }
+        
+        button {
+            margin-top: 20px;
+        }
+        
+        h1 {
+            font-size: 25px;
+        }
+        
+        strong {
+            font-size: x-large;
+            padding: 25px;
+            background: #00e5ff;
+            text-align: center;
+            color: #0d0d0d;
+            border-radius: 100px 0px 100px 0;
+        }
+        /* Stile generale */
+        
+        #speedCounter,
+        #speedRemaining,
+        #hpRemaining,
+        #hpCounter,
+        #attackCounter,
+        #attackRemaining,
+        #defenseCounter,
+        #defenseRemaining,
+        #spDefenseCounter,
+        #spDefenseRemaining,
+        #spAttackCounter,
+        #spAttackRemaining {
+            color: #00ff00;
+        }
+        
+        .countdown {
+            font-size: 30px;
+            /* Dimensione del testo */
+            color: #00e5ff;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+        
+        #statistiche,
+        #distribuzioneEV,
+        #EVsList,
+        #copiaDistribuzione {
+            padding: 10px;
+            width: 45%;
+        }
+        /* Stile generale */
+        
+        body {
+            text-align: center;
+            background-color: #0d0d0d;
+            color: #e0f7fa;
+            font-family: 'Times New Roman', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Contenitore principale */
+        /* Stile dei bottoni */
+        
+        button {
+            background-color: #00e5ff;
+            border: none;
+            border-radius: 5px;
+            color: #0d0d0d;
+            padding: 8px 16px;
+            margin: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #00b8d4;
+        }
+        /* Stile dei div */
+        /* Stile degli input */
+        
+        input {
+            background-color: #0d0d0d;
+            border: 2px solid #00e5ff;
+            border-radius: 5px;
+            color: #e0f7fa;
+            padding: 8px;
+            margin: 8px;
+            width: 75%;
+            font-size: 14px;
+        }
+        /* Stile responsive */
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 5px;
+            }
+            button,
+            input {
+                width: 75%;
+                font-size: 12px;
+            }
+            div {
+                padding: 10px;
+            }
+        }
+        
+        select {
+            background-color: #1a1a1a;
+            border: 2px solid #00e5ff;
+            border-radius: 5px;
+            color: #e0f7fa;
+            padding: 5px;
+            font-size: 15px;
+            font-family: "Times";
+            width: 150px;
+            text-align: center;
+        }
+        
+        #copiaDistribuzione {
+            color: #00e5ff;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <h1>Calcolatore EVs Pokémon</h1>
+    <form id="evForm">
+
+        <br>
+
+        <label id="Name" for="pokemonName">Nome Pokémon:</label>
+        <div class="container">
+
+
+            <input type="text" id="pokemonName" placeholder="Inserisci il nome del tuo Pokémon">
+        </div>
+
+        <div class="container">
+            <button id="confrontaStat" type="button" onclick="confrontaStatistiche()">Confronta Statistiche</button>
+
+        </div>
+
+        <div class="container">
+
+
+            <div id="statistiche"></div>
+            <div id="distribuzioneEV"></div>
+
+        </div>
+        <div class="container">
+            <button type="button" id="copiaButton" onclick="copiaDistribuzione()" style="display: none;">Copia Distribuzione EVs</button>
+        </div>
+
+        <hr>
+        <br><br>
+
+        <label for="defeatedPokemon">Pokémon sconfitti (usa * come moltiplicatore):</label>
+        <div class="container">
+            <input type="text" id="defeatedPokemon" name="defeatedPokemon" placeholder="Es. Zubat, Machop * 5">
+        </div>
+        <br><br>
+
+
+
+        <label for="crescicappa">Crescicappa:</label>
+        <div class="container">
+
+
+            <select id="crescicappa">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+
+        <label for="vigorcerchio">Vigorcerchio:</label>
+        <div class="container">
+
+
+            <select id="vigorcerchio">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+        <label for="vigorspeso">Vigorpeso:</label>
+        <div class="container">
+            <select id="vigorspeso">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+        <label for="vigorfascia">Vigorfascia:</label>
+        <div class="container">
+            <select id="vigorfascia">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+        <label for="vigorlente">Vigorlente:</label>
+        <div class="container">
+            <select id="vigorlente">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+        <label for="vigorbanda">Vigorbanda:</label>
+        <div class="container">
+            <select id="vigorbanda">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+        <label for="vigorgliera">Vigorgliera:</label>
+        <div class="container">
+            <select id="vigorgliera">
+    <option value="no">No</option>
+    <option value="si">Sì</option>
+</select>
+        </div>
+
+
+
+
+
+        <h2>Sacchi da Allenamento</h2>
+
+        <label for="bagSize">Grandezza del Sacco:</label>
+        <div class="container">
+            <select id="bagSize" name="bagSize">
+            <option value="small">Piccolo</option>
+            <option value="medium">Medio</option>
+            <option value="large">Grande</option>
+        </select>
+        </div>
+
+        <label for="bagStat">Statistica del Sacco:</label>
+        <div class="container">
+            <select id="bagStat" name="bagStat">
+            <option value="hp">PS</option>
+            <option value="attack">Attacco</option>
+            <option value="defense">Difesa</option>
+            <option value="speed">Velocità</option>
+            <option value="spAttack">Attacco Speciale</option>
+            <option value="spDefense">Difesa Speciale</option>
+        </select>
+        </div>
+
+
+
+        <label for="bagCount">Numero di Sacchi:</label>
+        <div class="container">
+            <input type="number" id="bagCount" name="bagCount" min="0" value="0">
+
+        </div>
+        <h2>Mini-giochi</h2>
+        <label for="gameLevel">Livello del Mini-gioco:</label>
+        <div class="container">
+            <select id="gameLevel" name="gameLevel">
+            <option value="1">Livello 1</option>
+            <option value="2">Livello 2</option>
+            <option value="3">Livello 3</option>
+        </select>
+        </div>
+
+        <label for="gameStat">Statistica del Mini-gioco:</label>
+        <div class="container">
+            <select id="gameStat" name="gameStat">
+            <option value="hp">PS</option>
+            <option value="attack">Attacco</option>
+            <option value="defense">Difesa</option>
+            <option value="speed">Velocità</option>
+            <option value="spAttack">Attacco Speciale</option>
+            <option value="spDefense">Difesa Speciale</option>
+        </select>
+        </div>
+
+        <label for="gameCount">Numero di Mini-giochi:</label>
+        <div class="container">
+            <input type="number" id="gameCount" name="gameCount" min="0" value="0">
+
+        </div>
+        <h2>Vitamine</h2>
+
+        <div>
+
+
+
+
+
+            <label for="hpVitamins">PS-Su:</label>
+            <div class="container">
+
+
+                <select id="hpVitamins" name="hpVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+      
+      
+    </select> </div>
+
+
+            <span id="hpCounter">0</span>
+            <span id="hpRemaining"> (mancano 10)</span>
+            <span id="hpLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+        <div>
+            <label for="attackVitamins">Proteina:</label>
+            <div class="container">
+
+
+                <select id="attackVitamins" name="attackVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+    </select>
+            </div>
+            <span id="attackCounter">0</span>
+            <span id="attackRemaining"> (mancano 10)</span>
+            <span id="attackLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+        <div>
+            <label for="defenseVitamins">Ferro:</label>
+            <div class="container">
+                <select id="defenseVitamins" name="defenseVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+    </select>
+            </div>
+            <span id="defenseCounter">0</span>
+            <span id="defenseRemaining"> (mancano 10)</span>
+            <span id="defenseLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+        <div>
+            <label for="speedVitamins">Carburante:</label>
+            <div class="container">
+                <select id="speedVitamins" name="speedVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+    </select>
+            </div>
+            <span id="speedCounter">0</span>
+            <span id="speedRemaining"> (mancano 10)</span>
+            <span id="speedLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+        <div>
+            <label for="spAttackVitamins">Calcio:</label>
+            <div class="container">
+                <select id="spAttackVitamins" name="spAttackVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+    </select>
+            </div>
+            <span id="spAttackCounter">0</span>
+            <span id="spAttackRemaining"> (mancano 10)</span>
+            <span id="spAttackLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+        <div>
+            <label for="spDefenseVitamins">Zinco:</label>
+            <div class="container">
+                <select id="spDefenseVitamins" name="spDefenseVitamins">
+      <option value=""></option>
+      <option value="1">1</option>
+    </select>
+            </div>
+            <span id="spDefenseCounter">0</span>
+            <span id="spDefenseRemaining"> (mancano 10)</span>
+            <span id="spDefenseLimitMessage" style="display: none; color: red; margin-left: 10px;">Limite raggiunto</span>
+        </div>
+
+
+
+        <div id="countdown2" class="countdown"></div>
+
+        <hr><br /><br><br>
+
+        <button id="calcEVs" type="button" onclick="calculateEVs()">Calcola EVs & salva</button>
+    </form>
+    <br><br><br><br>
+    <hr>
+
+    <br>
+
+    <h2>Totale EVs per Statistica</h2>
+    <div id="ev-results"></div>
+
+    <button id="copiaButton1" type="button" onclick="copiaDistribuzione()">Carica distribuzione EVs</button>
+
+    <div class="container">
+
+
+
+        <div id="EVsList">
+
+
+            <p>HP: <span id="totalHP">0</span>
+
+            </p>
+            <p>Attack: <span id="totalAttack">0</span>
+
+            </p>
+            <p>Defense: <span id="totalDefense">0</span>
+
+            </p>
+            <p>Speed: <span id="totalSpeed">0</span>
+
+            </p>
+            <p>Sp. Attack: <span id="totalSpAttack">0</span>
+
+            </p>
+            <p>Sp. Defense: <span id="totalSpDefense">0</span>
+
+            </p>
+
+        </div>
+
+        <div id="copiaDistribuzione">
+
+        </div>
+
+    </div>
+
+
+
+    <div id="countdown1" class="countdown"></div>
+
+
+
+    <button type="button" onclick="resetEVs()">Reset EVs & salva</button>
+    <br><br>
+
+
+
+
+    <p id="hpLimit" class="limit-message"></p>
+    <p id="attackLimit" class="limit-message"></p>
+    <p id="defenseLimit" class="limit-message"></p>
+    <p id="speedLimit" class="limit-message"></p>
+    <p id="spAttackLimit" class="limit-message"></p>
+    <p id="spDefenseLimit" class="limit-message"></p>
+
+    </a>
+
+    <script>
+        const counters = {
+            hp: 0,
+            attack: 0,
+            defense: 0,
+            speed: 0,
+            spAttack: 0,
+            spDefense: 0
+        };
+
+
+
+
+
+
+
+        function checkTotal() {
+            const ev = {
+                hp: parseInt(document.getElementById('totalHP').textContent) || 0,
+                attack: parseInt(document.getElementById('totalAttack').textContent) || 0,
+                defense: parseInt(document.getElementById('totalDefense').textContent) || 0,
+                speed: parseInt(document.getElementById('totalSpeed').textContent) || 0,
+                spAttack: parseInt(document.getElementById('totalSpAttack').textContent) || 0,
+                spDefense: parseInt(document.getElementById('totalSpDefense').textContent) || 0
+            };
+
+            const totalEVs = Math.round(ev.hp + ev.attack + ev.defense + ev.speed + ev.spAttack + ev.spDefense);
+            const evResults = document.getElementById('ev-results');
+            const maxEVs = 510;
+            const calculateButton = document.getElementById('calcEVs'); // Assicurati che l'ID del pulsante sia corretto
+
+            // Aggiorna il contenuto dell'elemento ev-results
+            evResults.innerHTML = '';
+
+            if (totalEVs >= maxEVs) {
+                evResults.innerHTML += `<p style="color: red; font-weight: bold;">Il totale degli EVs ha raggiunto il massimo di 510.</p>`;
+                calculateButton.disabled = true; // Disabilita il pulsante
+            } else {
+                const remainingEVs = maxEVs - totalEVs;
+                evResults.innerHTML += `<p style="color: #00ff00; font-weight: bold;">Il totale degli EVs è ${totalEVs}. Mancano ${remainingEVs} EVs da assegnare.</p>`;
+                calculateButton.disabled = false; // Abilita il pulsante se il totale è inferiore a 510
+            }
+        }
+
+        function decreaseEV(stat, reset = false) {
+            let statElement;
+            switch (stat) {
+                case 'hp':
+                    statElement = document.getElementById('totalHP');
+                    break;
+                case 'attack':
+                    statElement = document.getElementById('totalAttack');
+                    break;
+                case 'defense':
+                    statElement = document.getElementById('totalDefense');
+                    break;
+                case 'speed':
+                    statElement = document.getElementById('totalSpeed');
+                    break;
+                case 'spAttack':
+                    statElement = document.getElementById('totalSpAttack');
+                    break;
+                case 'spDefense':
+                    statElement = document.getElementById('totalSpDefense');
+                    break;
+                default:
+                    console.error('Statistica non valida');
+                    return;
+            }
+
+
+
+            checkTotal();
+
+
+        }
+
+
+
+        function checkTotalEVs(evs) {
+            const totalEVs = Math.round(evs.hp + evs.attack + evs.defense + evs.speed + evs.spAttack + evs.spDefense);
+            const evResults = document.getElementById('ev-results');
+            const maxEVs = 510;
+
+            // Aggiorna il contenuto dell'elemento ev-results
+            evResults.innerHTML = '';
+
+            if (totalEVs >= maxEVs) {
+                evResults.innerHTML += `<p style="color: red; font-weight: bold;">Il totale degli EVs ha raggiunto il massimo di 510.</p>`;
+            } else {
+                const remainingEVs = maxEVs - totalEVs;
+                evResults.innerHTML += `<p style="color: green; font-weight: bold;">Il totale degli EVs è ${totalEVs}. Mancano ${remainingEVs} EVs da assegnare.</p>`;
+
+            }
+
+
+        }
+
+
+
+
+
+
+
+        function loadFromLocalStorage() {
+            const savedCounters = JSON.parse(localStorage.getItem('vitaminCounters'));
+            if (savedCounters) {
+                Object.keys(savedCounters).forEach(stat => {
+                    counters[stat] = savedCounters[stat];
+
+
+                });
+            }
+        }
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadEVs();
+
+
+
+
+            const selectedStats = ['hp', 'attack', 'defense', 'speed', 'spAttack', 'spDefense'];
+            selectedStats.forEach(stat => {
+                const selectElement = document.getElementById(stat + 'Vitamins');
+                if (selectElement.value === '1' && counters[stat] < 10) {
+                    counters[stat]++;
+                    document.getElementById(stat + 'Counter').innerText = counters[stat];
+                    document.getElementById(stat + 'Remaining').innerText = ` (mancano ${10 - counters[stat]})`;
+
+
+
+
+                    checkLimits(stat)
+                    saveToLocalStorage()
+                } else {
+                    loadFromLocalStorage()
+                    document.getElementById(stat + 'Counter').innerText = counters[stat];
+                    document.getElementById(stat + 'Remaining').innerText = ` (mancano ${10 - counters[stat]})`;
+
+
+
+
+                    checkLimits(stat);
+                    saveToLocalStorage()
+                }
+
+
+            });
+
+
+        });
+
+        function loadEVs() {
+            const evs = JSON.parse(localStorage.getItem('evs')) || {
+                hp: 0,
+                attack: 0,
+                defense: 0,
+                speed: 0,
+                spAttack: 0,
+                spDefense: 0
+            };
+
+            document.getElementById('totalHP').innerText = Math.round(evs.hp);
+            document.getElementById('totalAttack').innerText = Math.round(evs.attack);
+            document.getElementById('totalDefense').innerText = Math.round(evs.defense);
+            document.getElementById('totalSpeed').innerText = Math.round(evs.speed);
+            document.getElementById('totalSpAttack').innerText = Math.round(evs.spAttack);
+            document.getElementById('totalSpDefense').innerText = Math.round(evs.spDefense);
+            checkTotal()
+            checkVitaminLimits(evs);
+
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('vitaminCounters', JSON.stringify(counters));
+        }
+
+
+        function saveEVs(evs) {
+            localStorage.setItem('evs', JSON.stringify(evs));
+        }
+
+
+        function resetCounters() {
+            const selectedStats = ['hp', 'attack', 'defense', 'speed', 'spAttack', 'spDefense'];
+            selectedStats.forEach(stat => {
+                counters[stat] = 0;
+
+                document.getElementById(stat + 'Vitamins').disabled = false;
+                document.getElementById(stat + 'LimitMessage').style.display = 'none';
+            });
+            localStorage.removeItem('vitaminCounters');
+            console.log('Counters resettati:', counters);
+        }
+
+
+        function checkLimits(stat) {
+            if (counters[stat] >= 10) {
+                document.getElementById(stat + 'Vitamins').textContent = ""
+                document.getElementById(stat + 'Vitamins').disabled = true;
+                document.getElementById(stat + 'LimitMessage').style.display = 'inline';
+
+
+
+            }
+
+
+        }
+
+        function startCountdown1() {
+            const countdown1 = document.getElementById('countdown1');
+            countdown1.innerHTML = 'Salvataggio in corso, mancano <span id="timer1">3</span> secondi al termine.';
+            let timeLeft1 = 3;
+            const timerElement1 = document.getElementById('timer1');
+
+            const countdown1Interval = setInterval(() => {
+                if (timeLeft1 <= 0) {
+                    clearInterval(countdown1Interval);
+                    window.location.reload();
+                } else {
+                    timerElement1.innerText = timeLeft1;
+                    timeLeft1--;
+                }
+            }, 1000);
+        }
+
+
+
+
+
+        function startCountdown2() {
+            const countdown2 = document.getElementById('countdown2');
+            countdown2.innerHTML = 'Salvataggio in corso, mancano <span id="timer2">3</span> secondi al termine.';
+            let timeLeft2 = 3;
+            const timerElement2 = document.getElementById('timer2');
+
+            const countdown2Interval = setInterval(() => {
+                if (timeLeft2 <= 0) {
+                    clearInterval(countdown2Interval);
+                    window.location.reload();
+                } else {
+                    timerElement2.innerText = timeLeft2;
+                    timeLeft2--;
+                }
+            }, 1000);
+        }
+
+
+
+
+
+
+
+        async function calculateEVs() {
+
+
+            startCountdown2();
+
+
+
+
+
+            const selectedStats = ['hp', 'attack', 'defense', 'speed', 'spAttack', 'spDefense'];
+            selectedStats.forEach(stat => {
+
+
+
+
+
+                const selectElement = document.getElementById(stat + 'Vitamins');
+
+
+
+
+
+
+
+
+
+
+                if (selectElement.value === '1' && counters[stat] < 10) {
+                    counters[stat]++;
+                    document.getElementById(stat + 'Counter').innerText = counters[stat];
+                    document.getElementById(stat + 'Remaining').innerText = ` (mancano ${10 - counters[stat]})`;
+
+
+
+
+
+                    saveToLocalStorage()
+                } else {
+
+                    loadFromLocalStorage()
+                    document.getElementById(stat + 'Counter').innerText = counters[stat];
+                    document.getElementById(stat + 'Remaining').innerText = ` (mancano ${10 - counters[stat]})`;
+
+
+
+
+
+                    saveToLocalStorage()
+                }
+
+
+
+            });
+
+
+
+
+
+            const bagSize = document.getElementById('bagSize').value;
+            const bagStat = document.getElementById('bagStat').value;
+            const bagCount = parseInt(document.getElementById('bagCount').value) || 0;
+            const gameLevel = document.getElementById('gameLevel').value;
+            const gameStat = document.getElementById('gameStat').value;
+            const gameCount = parseInt(document.getElementById('gameCount').value) || 0;
+            const hpVitamins = Math.min(parseInt(document.getElementById('hpVitamins').value) || 0, 10);
+            const attackVitamins = Math.min(parseInt(document.getElementById('attackVitamins').value) || 0, 10);
+            const defenseVitamins = Math.min(parseInt(document.getElementById('defenseVitamins').value) || 0, 10);
+            const speedVitamins = Math.min(parseInt(document.getElementById('speedVitamins').value) || 0, 10);
+            const spAttackVitamins = Math.min(parseInt(document.getElementById('spAttackVitamins').value) || 0, 10);
+            const spDefenseVitamins = Math.min(parseInt(document.getElementById('spDefenseVitamins').value) || 0, 10);
+
+            let evs = JSON.parse(localStorage.getItem('evs')) || {
+                hp: 0,
+                attack: 0,
+                defense: 0,
+                speed: 0,
+                spAttack: 0,
+                spDefense: 0
+            };
+
+            const bagValues = {
+                small: 1,
+                medium: 4,
+                large: 12
+            };
+
+            const gameValues = {
+                1: 4,
+                2: 8,
+                3: 12
+            };
+
+            if (bagStat in evs) {
+                evs[bagStat] += bagCount * bagValues[bagSize];
+            }
+
+            if (gameStat in evs) {
+                evs[gameStat] += gameCount * gameValues[gameLevel];
+            }
+
+            evs.hp += hpVitamins * 10;
+            evs.attack += attackVitamins * 10;
+            evs.defense += defenseVitamins * 10;
+            evs.speed += speedVitamins * 10;
+            evs.spAttack += spAttackVitamins * 10;
+            evs.spDefense += spDefenseVitamins * 10;
+
+
+
+            for (let stat in evs) {
+                if (evs[stat] > 255) {
+                    evs[stat] = 255;
+                }
+
+
+                const defeatedPokemon = document.getElementById('defeatedPokemon').value.split(',');
+                const crescicappa = document.getElementById('crescicappa').value === 'si';
+                const vigorcerchio = document.getElementById('vigorcerchio').value === 'si';
+                const vigorspeso = document.getElementById('vigorspeso').value === 'si';
+                const vigorfascia = document.getElementById('vigorfascia').value === 'si';
+                const vigorlente = document.getElementById('vigorlente').value === 'si';
+                const vigorbanda = document.getElementById('vigorbanda').value === 'si';
+                const vigorgliera = document.getElementById('vigorgliera').value === 'si';
+                let totalEVs = 0;
+
+                for (const entry of defeatedPokemon) {
+                    const [pokemon, count] = entry.trim().toLowerCase().split('*').map(item => item.trim());
+                    const numDefeated = parseInt(count) || 1;
+
+                    if (pokemon) {
+                        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            data.stats.forEach(stat => {
+                                const statName = stat.stat.name;
+                                let ev = (stat.effort * numDefeated) / 6;
+                                if (crescicappa) {
+                                    ev *= 2;
+                                }
+
+                                switch (statName) {
+                                    case 'hp':
+                                        if (vigorspeso) ev += (4 * numDefeated) / 6;
+                                        evs.hp += ev;
+                                        if (evs.hp > 255) evs.hp = 255;
+                                        break;
+                                    case 'attack':
+                                        if (vigorcerchio) ev += (4 * numDefeated) / 6;
+                                        evs.attack += ev;
+                                        if (evs.attack > 255) evs.attack = 255;
+                                        break;
+                                    case 'defense':
+                                        if (vigorfascia) ev += (4 * numDefeated) / 6;
+                                        evs.defense += ev;
+                                        if (evs.defense > 255) evs.defense = 255;
+                                        break;
+                                    case 'special-attack':
+                                        if (vigorlente) ev += (4 * numDefeated) / 6;
+                                        evs.spAttack += ev;
+                                        if (evs.spAttack > 255) evs.spAttack = 255;
+                                        break;
+                                    case 'special-defense':
+                                        if (vigorbanda) ev += (4 * numDefeated) / 6;
+                                        evs.spDefense += ev;
+                                        if (evs.spDefense > 255) evs.spDefense = 255;
+                                        break;
+                                    case 'speed':
+                                        if (vigorgliera) ev += (4 * numDefeated) / 6;
+                                        evs.speed += ev;
+                                        if (evs.speed > 255) evs.speed = 255;
+                                        break;
+                                }
+                            });
+                        }
+                    }
+                }
+
+
+                checkVitaminLimits(evs)
+                checkTotalEVs(evs);
+
+                loadFromLocalStorage();
+
+                checkLimits(stat)
+
+
+
+
+
+
+
+            }
+
+            saveEVs(evs);
+
+            document.getElementById('totalHP').innerText = Math.round(evs.hp);
+            document.getElementById('totalAttack').innerText = Math.round(evs.attack);
+            document.getElementById('totalDefense').innerText = Math.round(evs.defense);
+            document.getElementById('totalSpeed').innerText = Math.round(evs.speed);
+            document.getElementById('totalSpAttack').innerText = Math.round(evs.spAttack);
+            document.getElementById('totalSpDefense').innerText = Math.round(evs.spDefense);
+
+
+            checkVitaminLimits(evs)
+
+
+        }
+
+        function resetEVs() {
+            localStorage.removeItem("vitaminCounters")
+            localStorage.removeItem('evs');
+            document.getElementById('totalHP').innerText = 0;
+            document.getElementById('totalAttack').innerText = 0;
+            document.getElementById('totalDefense').innerText = 0;
+            document.getElementById('totalSpeed').innerText = 0;
+            document.getElementById('totalSpAttack').innerText = 0;
+            document.getElementById('totalSpDefense').innerText = 0;
+
+            document.getElementById('hpVitamins').disabled = false;
+            document.getElementById('attackVitamins').disabled = false;
+            document.getElementById('defenseVitamins').disabled = false;
+            document.getElementById('speedVitamins').disabled = false;
+            document.getElementById('spAttackVitamins').disabled = false;
+            document.getElementById('spDefenseVitamins').disabled = false;
+
+
+
+        }
+
+        function checkVitaminLimits(evs) {
+
+
+
+
+
+            if (evs.hp >= 100) {
+                document.getElementById('hpVitamins').disabled = true;
+                document.getElementById('hpVitamins').value = "";
+                document.getElementById('hpLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('hpLimitMessage').style.display = 'none';
+                if (evs.hp === 0) {
+                    document.getElementById('hpVitamins').disabled = false;
+                }
+            }
+
+            if (evs.attack >= 100) {
+                document.getElementById('attackVitamins').disabled = true;
+                document.getElementById('attackVitamins').value = "";
+                document.getElementById('attackLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('attackLimitMessage').style.display = 'none';
+                if (evs.attack === 0) {
+                    document.getElementById('attackVitamins').disabled = false;
+                }
+            }
+
+            if (evs.defense >= 100) {
+                document.getElementById('defenseVitamins').disabled = true;
+                document.getElementById('defenseVitamins').value = "";
+                document.getElementById('defenseLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('defenseLimitMessage').style.display = 'none';
+                if (evs.defense === 0) {
+                    document.getElementById('defenseVitamins').disabled = false;
+                }
+            }
+
+            if (evs.speed >= 100) {
+                document.getElementById('speedVitamins').disabled = true;
+                document.getElementById('speedVitamins').value = "";
+                document.getElementById('speedLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('speedLimitMessage').style.display = 'none';
+                if (evs.speed === 0) {
+                    document.getElementById('speedVitamins').disabled = false;
+                }
+            }
+
+            if (evs.spAttack >= 100) {
+                document.getElementById('spAttackVitamins').disabled = true;
+                document.getElementById('spAttackVitamins').value = "";
+                document.getElementById('spAttackLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('spAttackLimitMessage').style.display = 'none';
+                if (evs.spAttack === 0) {
+                    document.getElementById('spAttackVitamins').disabled = false;
+                }
+            }
+
+            if (evs.spDefense >= 100) {
+                document.getElementById('spDefenseVitamins').disabled = true;
+                document.getElementById('spDefenseVitamins').value = "";
+                document.getElementById('spDefenseLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('spDefenseLimitMessage').style.display = 'none';
+                if (evs.spDefense === 0) {
+                    document.getElementById('spDefenseVitamins').disabled = false;
+                }
+            }
+        }
+
+        function resetVitaminValues() {
+            const selectedStats = ['hp', 'attack', 'defense', 'speed', 'spAttack', 'spDefense'];
+            selectedStats.forEach(stat => {
+                counters[stat] = 0;
+                document.getElementById(stat + 'Counter').innerText = counters[stat];
+                document.getElementById(stat + 'Remaining').innerText = ` (mancano 10)`;
+                document.getElementById(stat + 'Vitamins').disabled = false;
+                document.getElementById(stat + 'LimitMessage').style.display = 'none';
+            });
+            localStorage.removeItem('vitaminCounters');
+            console.log('Valori delle vitamine ripristinati ai valori originali.');
+        }
+
+
+
+        function resetEVs() {
+
+
+
+
+            localStorage.removeItem('evs');
+            document.getElementById('totalHP').innerText = 0;
+            document.getElementById('totalAttack').innerText = 0;
+            document.getElementById('totalDefense').innerText = 0;
+            document.getElementById('totalSpeed').innerText = 0;
+            document.getElementById('totalSpAttack').innerText = 0;
+            document.getElementById('totalSpDefense').innerText = 0;
+
+            document.getElementById('hpVitamins').disabled = false;
+            document.getElementById('attackVitamins').disabled = false;
+            document.getElementById('defenseVitamins').disabled = false;
+            document.getElementById('speedVitamins').disabled = false;
+            document.getElementById('spAttackVitamins').disabled = false;
+            document.getElementById('spDefenseVitamins').disabled = false;
+
+            document.getElementById('hpVitamins').value = "";
+            document.getElementById('attackVitamins').value = "";
+            document.getElementById('defenseVitamins').value = "";
+            document.getElementById('speedVitamins').value = "";
+            document.getElementById('spAttackVitamins').value = "";
+            document.getElementById('spDefenseVitamins').value = "";
+
+        }
+
+
+
+
+
+
+        function resetEVs() {
+
+
+            startCountdown1()
+
+            document.getElementById("hpLimitMessage").style.display = "none";
+            document.getElementById("attackLimitMessage").style.display = "none";
+            document.getElementById("defenseLimitMessage").style.display = "none";
+            document.getElementById("speedLimitMessage").style.display = "none";
+            document.getElementById("spAttackLimitMessage").style.display = "none";
+            document.getElementById("spDefenseLimitMessage").style.display = "none";
+            localStorage.removeItem('evs');
+
+            document.getElementById('totalHP').innerText = 0;
+            document.getElementById('totalAttack').innerText = 0;
+            document.getElementById('totalDefense').innerText = 0;
+            document.getElementById('totalSpeed').innerText = 0;
+            document.getElementById('totalSpAttack').innerText = 0;
+            document.getElementById('totalSpDefense').innerText = 0;
+
+            document.getElementById('hpVitamins').disabled = false;
+            document.getElementById('attackVitamins').disabled = false;
+            document.getElementById('defenseVitamins').disabled = false;
+            document.getElementById('speedVitamins').disabled = false;
+            document.getElementById('spAttackVitamins').disabled = false;
+            document.getElementById('spDefenseVitamins').disabled = false;
+
+            document.getElementById('hpVitamins').value = "";
+            document.getElementById('attackVitamins').value = "";
+            document.getElementById('defenseVitamins').value = "";
+            document.getElementById('speedVitamins').value = "";
+            document.getElementById('spAttackVitamins').value = "";
+            document.getElementById('spDefenseVitamins').value = "";
+
+            document.getElementById('hpLimit').innerText = "";
+            document.getElementById('attackLimit').innerText = "";
+            document.getElementById('defenseLimit').innerText = "";
+            document.getElementById('speedLimit').innerText = "";
+            document.getElementById('spAttackLimit').innerText = "";
+            document.getElementById('spDefenseLimit').innerText = ""
+
+            const vitaminStats = ['hp', 'attack', 'defense', 'speed', 'spAttack', 'spDefense'];
+            const optionValues = ['', '1']; // Puoi aggiungere più valori se necessario
+
+            vitaminStats.forEach(stat => {
+                const selectElement = document.getElementById(stat + 'Vitamins');
+                while (selectElement.options.length > 0) {
+                    selectElement.remove(0);
+                }
+
+                optionValues.forEach(value => {
+
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.text = value;
+                    selectElement.appendChild(option);
+                });
+            });
+
+            resetVitaminValues()
+            checkTotal()
+            checkVitaminLimits(evs)
+
+            resetCounters()
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+        function checkVitaminLimits(evs) {
+
+
+
+            if (evs.hp >= 255 || counters.hp >= 10) {
+                document.getElementById('hpVitamins').disabled = true;
+                document.getElementById('hpVitamins').value = "";
+                document.getElementById('hpLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('hpLimitMessage').style.display = 'none';
+                if (evs.hp === 0) {
+                    document.getElementById('hpVitamins').disabled = false;
+                }
+            }
+
+            if (evs.attack >= 255 || counters.attack >= 10) {
+                document.getElementById('attackVitamins').disabled = true;
+                document.getElementById('attackVitamins').value = "";
+                document.getElementById('attackLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('attackLimitMessage').style.display = 'none';
+                if (evs.attack === 0) {
+                    document.getElementById('attackVitamins').disabled = false;
+                }
+            }
+
+            if (evs.defense >= 255 || counters.defense >= 10) {
+                document.getElementById('defenseVitamins').disabled = true;
+                document.getElementById('defenseVitamins').value = "";
+                document.getElementById('defenseLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('defenseLimitMessage').style.display = 'none';
+                if (evs.defense === 0) {
+                    document.getElementById('defenseVitamins').disabled = false;
+                }
+            }
+
+            if (evs.speed >= 255 || counters.speed >= 10) {
+                document.getElementById('speedVitamins').disabled = true;
+                document.getElementById('speedVitamins').value = "";
+                document.getElementById('speedLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('speedLimitMessage').style.display = 'none';
+                if (evs.speed === 0) {
+                    document.getElementById('speedVitamins').disabled = false;
+                }
+            }
+
+            if (evs.spAttack >= 255 || counters.spAttack >= 10) {
+                document.getElementById('spAttackVitamins').disabled = true;
+                document.getElementById('spAttackVitamins').value = "";
+                document.getElementById('spAttackLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('spAttackLimitMessage').style.display = 'none';
+                if (evs.spAttack === 0) {
+                    document.getElementById('spAttackVitamins').disabled = false;
+                }
+            }
+
+            if (evs.spDefense >= 255 || counters.spDefense >= 10) {
+                document.getElementById('spDefenseVitamins').disabled = true;
+                document.getElementById('spDefenseVitamins').value = "";
+                document.getElementById('spDefenseLimitMessage').style.display = 'inline';
+            } else {
+                document.getElementById('spDefenseLimitMessage').style.display = 'none';
+                if (evs.spDefense === 0) {
+                    document.getElementById('spDefenseVitamins').disabled = false;
+                }
+            }
+        }
+
+        async function confrontaStatistiche() {
+            document.getElementById("copiaButton").style.display = "block";
+            const pokemonName = document.getElementById('pokemonName').value.trim().toLowerCase();
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            if (response.ok) {
+                const data = await response.json();
+                const stats = data.stats.map(stat => ({
+                    name: stat.stat.name,
+                    value: stat.base_stat
+                }));
+
+                stats.sort((a, b) => b.value - a.value);
+
+                const statisticheDiv = document.getElementById('statistiche');
+                statisticheDiv.innerHTML = `<h3>Statistiche di base di ${data.name}:</h3>`;
+                stats.forEach(stat => {
+                    statisticheDiv.innerHTML += `<p>${stat.name}: ${stat.value}</p>`;
+                });
+
+                calcolaDistribuzioneEV(stats);
+
+                // Mostra il pulsante "Copia Distribuzione"
+                document.getElementById('copiaButton').style.display = 'block';
+            } else {
+                alert("Pokémon non trovato. Per favore, controlla il nome e riprova.");
+            }
+        }
+
+        function calcolaDistribuzioneEV(stats) {
+            const evDistribuzione = {
+                hp: 0,
+                attack: 0,
+                defense: 0,
+                speed: 0,
+                'special-attack': 0,
+                'special-defense': 0
+
+            };
+
+            // Assegna 252 EV alla statistica più alta
+            evDistribuzione[stats[0].name] = 252;
+
+            // Assegna 215 EV alla seconda statistica più alta
+            evDistribuzione[stats[1].name] = 200;
+
+            // Assegna 13 EV alla terza statistica più alta
+            evDistribuzione[stats[2].name] = 22;
+
+            // Assegna 10 EV a tutte le altre statistiche rimanenti
+            const remainingStats = stats.slice(3);
+            remainingStats.forEach(stat => {
+                evDistribuzione[stat.name] = 12;
+            });
+
+            const distribuzioneDiv = document.getElementById('distribuzioneEV');
+            distribuzioneDiv.innerHTML = `<h3>Migliore distribuzione EVs`;
+            for (const [stat, ev] of Object.entries(evDistribuzione)) {
+                if (ev > 0) {
+                    distribuzioneDiv.innerHTML += `<p>${stat}: ${ev}</p>`;
+                }
+            }
+
+            // Salva la distribuzione degli EV nel local storage
+            localStorage.setItem('Name', JSON.stringify(document.getElementById("pokemonName").value));
+            localStorage.setItem('evDistribuzione', JSON.stringify(evDistribuzione));
+        }
+
+        function copiaDistribuzione() {
+
+            const name = JSON.parse(localStorage.getItem('Name'));
+            document.getElementById("Name").innerHTML = '<h3><strong>' + name + '</strong></h3>'
+
+            document.getElementById("pokemonName").style.display = "none";
+            document.getElementById("confrontaStat").style.display = "none";
+            document.getElementById("copiaButton").style.display = "none";
+            document.getElementById("copiaButton1").style.display = "none";
+            const evDistribuzione = JSON.parse(localStorage.getItem('evDistribuzione'));
+            const copiaDistribuzioneDiv = document.getElementById('copiaDistribuzione');
+
+            for (const [stat, ev] of Object.entries(evDistribuzione)) {
+                if (ev > 0) {
+                    copiaDistribuzioneDiv.innerHTML += `<p>${stat}: ${ev}</p>`;
+
+
+                }
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>
