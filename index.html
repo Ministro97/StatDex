@@ -12,12 +12,10 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: black;
+            background: #000;
             height: 100vh;
             display: grid;
             justify-items: center;
-          
-            overflow: hidden;
         }
         
         #containerTitle {
@@ -29,7 +27,7 @@
             color: #fff;
             font-size: 70px;
             font-family: sans-serif;
-            background: black;
+            background: rgb(0, 0, 0);
             ;
         }
         
@@ -90,7 +88,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            filter: blur(50px);
+            filter: blur(40px);
         }
         
         .box {
@@ -103,8 +101,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            margin-bottom: 40px;
-            bottom: 80px;
+            margin-bottom: 35px;
+            bottom: 50px;
         }
         
         .border-blur::before,
@@ -169,11 +167,8 @@
             text-align: center;
             line-height: 200px;
         }
-
-
-
-
-   @keyframes elastic-indicator {
+        
+        @keyframes elastic-indicator {
             0% {
                 left: 0;
                 right: 100%;
@@ -203,9 +198,8 @@
             background-color: #00ccff;
             animation: elastic-indicator 4s infinite;
         }
-
-
- .ball {
+        
+        .ball {
             width: 200px;
             height: 200px;
             border-radius: 50%;
@@ -262,23 +256,12 @@
                 box-shadow: 0 0 10px -2px #1300ea inset;
             }
         }
-
-
-
-
-
-        
-
-        
     </style>
 </head>
 
 <body>
 
-     <div class="request-indicator"></div>
-   
-
-
+    <div class="request-indicator"></div>
     <div id="containerTitle">
         <span id="txt">STATDEX</span>
         <span id="gradient"></span>
@@ -286,16 +269,15 @@
     </div>
 
 
-   <div class="ball" style="display: none;"></div>
 
 
+    <div class="ball" style="display: none;"></div>
 
 
-
-<div class="container">
+    <div class="container">
         <div class="box">
             <span></span>
-            <a class="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">IVS PREDICT</a>
+            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">IVS PREDICT</a>
         </div>
         <div class="border-blur"></div>
 
@@ -303,27 +285,41 @@
 
         <div class="box">
             <span></span>
-            <a class="link"  href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">EVS TRACKER</a>
+            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">EVS TRACKER</a>
         </div>
         <div class="border-blur"></div>
 
 
         <div class="box">
             <span></span>
-            <a class="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">STAT PREDICT</a>
+            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">STAT PREDICT</a>
         </div>
         <div class="border-blur"></div>
 
 
         <div class="box">
             <span></span>
-            <a class="link" href="https://ministro97.github.io/StatDex/percentageSTat.html" class="clickable-area">% STAT</a>
+            <a id="link" href="https://ministro97.github.io/StatDex/percentageSTat.html" class="clickable-area">% STAT</a>
         </div>
         <div class="border-blur"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
 
-  <script>
+    <script>
         document.getElementById('link').addEventListener('click', function(event) {
             event.preventDefault(); // Previene il comportamento predefinito del link
             document.getElementsByClassName('ball')[0].style.display = "block";
