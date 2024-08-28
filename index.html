@@ -342,9 +342,11 @@
                     window.onload = function() {
     if (window.location.href === "https://ministro97.github.io/StatDex/EVsTracker.html") {
         setTimeout(function() {
-            // Il codice da eseguire dopo il timeout
+        document.getElementsByClassName('ball')[0].style.display = "none";
+                            document.getElementsByClassName('container')[0].style.display = "block";
+                            document.getElementById('containerTitle').style.display = "block";
 
-        }, 3000); // 3000 millisecondi = 3 secondi
+        }, 3000); 
     }
 };
 
