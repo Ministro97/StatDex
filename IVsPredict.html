@@ -1,197 +1,235 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IVs predict</title>
     <style>
         body {
-            font-family: Times New Roman, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 20px;
         }
-   
+        
+        h1 {
+            color: #333;
         }
-        label, select, input, button {
+        
+        label,
+        select,
+        input,
+        button {
             margin: 10px 0;
             display: block;
         }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
+        
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
+        
         th {
             background-color: #f2f2f2;
         }
+        
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        
         tr:hover {
             background-color: #f1f1f1;
         }
+        
         .highlight {
             background-color: red;
             color: white;
         }
-        
-        
         /* Stile per la tabella */
-
-table {
-    width: 80%; 
-    margin: 20px auto; /
-    border-collapse: collapse;
-    font-size: 0.9em; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #2c2c2c; 
-    color: #ffffff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    overflow-x: auto; 
-    display: block; 
-}
-
-table thead tr {
-    background-color: #0d0d0d; 
-    text-align: left;
-}
-
-table th, table td {
-    padding: 8px 10px; 
-    border: 1px solid #00FFFF; 
-}
-
-table tbody tr {
-    border-bottom: 1px solid #444444;
-}
-
-table tbody tr:nth-of-type(even) {
-    background-color: #3a3a3a;
-}
-
-table tbody tr:last-of-type {
-    border-bottom: 2px solid #333333;
-}
-
-table tbody tr:hover {
-    background-color: #575757;
-}
-
-table th {
-    background-color: #0d0d0d; 
-    color: #00FFFF; 
-    text-transform: uppercase;
-    border: 1px solid #00FFFF; 
-}
-
-table td {
-    transition: all 0.3s ease;
-    border: 1px solid #00FFFF; 
-}
-
-table td.red {
-    color: #ff4c4c;
-    font-weight: bold;
-}
-
-table thead th, table tbody td:first-child {
-    background-color: #0d0d0d; 
-    color: #00FFFF; 
-    text-transform: uppercase;
-    border: 1px solid #00FFFF; 
-}
-
-table thead th {
-    border-bottom: 2px solid #00FFFF;
-}
-
-table tbody td:first-child {
-    border-right: 2px solid #00FFFF;
-}
-
-/* Stile per i bottoni */
-button {
-    background-color: #00FFFF; 
-    color: #1e1e1e;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px 0;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #00b3b3; 
-
-/* Stile per gli input */
-input[type="text"], select {
-    background-color: #2c2c2c; 
-    color: #ffffff;
-    border: 1px solid #00FFFF; 
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 1em;
-    width: 90%;
-    box-sizing: border-box;
-}
-
-input[type="text"]::placeholder {
-    color: #b3b3b3; 
-}
-
-
-body {
-    background: linear-gradient(135deg, #1e1e1e 25%, #2c2c2c 100%);
-    color: #ffffff;
-
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-     font-family: Times New Roman, sans-serif;
-}
-
-/* Stile per i div */
-div {
-    
-    color: #ffffff;
-    
-    padding: 20px;
-    margin: 10px 0;
-   
-    width: 100%; 
-    box-sizing: border-box;
-}
-
+        /* Stile per la tabella */
+        /* Stile per la tabella */
         
-           h1 {
-  font-size: 2em;
-  color: #00e6e6;
-  text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6;
-  margin: 20px 0;
-}
+        table {
+            width: 80%;
+            /* Riduce la larghezza della tabella */
+            margin: 20px auto;
+            /* Centra la tabella */
+            border-collapse: collapse;
+            font-size: 0.9em;
+            /* Riduce la dimensione del testo */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2c2c2c;
+            /* Colore di sfondo più chiaro */
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+            /* Permette l'overflow orizzontale */
+            display: block;
+            /* Permette l'overflow */
+        }
         
+        table thead tr {
+            background-color: #0d0d0d;
+            /* Colore più scuro per le intestazioni */
+            text-align: left;
+        }
         
+        table th,
+        table td {
+            padding: 8px 10px;
+            /* Riduce il padding */
+            border: 1px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        
+        table tbody tr {
+            border-bottom: 1px solid #444444;
+        }
+        
+        table tbody tr:nth-of-type(even) {
+            background-color: #3a3a3a;
+            /* Colore di sfondo più chiaro */
+        }
+        
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #333333;
+        }
+        
+        table tbody tr:hover {
+            background-color: #575757;
+        }
+        
+        table th {
+            background-color: #0d0d0d;
+            /* Colore più scuro per le intestazioni */
+            color: #00FFFF;
+            /* Neon azzurro */
+            text-transform: uppercase;
+            border: 1px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        
+        table td {
+            transition: all 0.3s ease;
+            border: 1px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        
+        table td.red {
+            color: #ff4c4c;
+            font-weight: bold;
+        }
+        
+        table thead th,
+        table tbody td:first-child {
+            background-color: #0d0d0d;
+            /* Colore più scuro per le intestazioni */
+            color: #00FFFF;
+            /* Neon azzurro */
+            text-transform: uppercase;
+            border: 1px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        
+        table thead th {
+            border-bottom: 2px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        
+        table tbody td:first-child {
+            border-right: 2px solid #00FFFF;
+            /* Neon azzurro */
+        }
+        /* Stile per i bottoni */
+        
+        button {
+            background-color: #00FFFF;
+            /* Neon azzurro */
+            color: #1e1e1e;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #00b3b3;
+            /* Neon azzurro più scuro */
+        }
+        /* Stile per gli input */
+        
+        input[type="text"],
+        select {
+            background-color: #2c2c2c;
+            /* Colore di sfondo degli input */
+            color: #ffffff;
+            border: 1px solid #00FFFF;
+            /* Neon azzurro */
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]::placeholder {
+            color: #b3b3b3;
+            /* Colore del placeholder */
+        }
+        /* Colore di sfondo futuristico per la pagina */
+        
+        body {
+            background: linear-gradient(135deg, #1e1e1e 25%, #2c2c2c 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        /* Stile per i div */
+        
+        div {
+            color: #ffffff;
+            padding: 20px;
+            margin: 10px 0;
+            width: 100%;
+            /* Riduce la larghezza dei div */
+            box-sizing: border-box;
+        }
+        
+        h1 {
+            font-size: 2em;
+            color: #00e6e6;
+            text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6;
+            margin: 20px 0;
+        }
     </style>
 </head>
+
 <body>
 
-    <h1>IVs Predict</h1>
+    <h1>IVs predict</h1>
     <br>
     <label for="pokemon">Nome del Pokémon:</label>
     <input type="text" id="pokemon" name="pokemon">
     <br>
     <label for="statistica">Statistica da calcolare:</label>
     <select id="statistica" name="statistica">
-      <<option value=""></option>
+      <option value=""></option>
         <option value="hp">PS</option>
         <option value="attack">Attacco</option>
         <option value="defense">Difesa</option>
@@ -231,9 +269,9 @@ div {
         <option value="vivace">Vivace</option>
     </select>
     <br>
-  <label for="livello">Livello:</label>
-  
-<select id="livello" name="livello">
+    <label for="livello">Livello:</label>
+
+    <select id="livello" name="livello">
   <option value=""></option>
     <!-- Opzioni generate dinamicamente da JavaScript -->
 </select>
@@ -247,8 +285,8 @@ div {
     <br>
     <button onclick="calcolaStatisticaPokemon()">Calcola</button>
     <div id="risultato"></div>
-    
-  <select id="differenza">
+
+    <select id="differenza">
        <option value="28-29">Differenza tra IV 28 e IV 29</option>
     <option value="29-30">Differenza tra IV 29 e IV 30</option>
     <option value="30-31">Differenza tra IV 30 e IV 31</option>
@@ -257,84 +295,157 @@ div {
 
 
 
-    
+
     <div id="risultato1"></div>
-<button onclick="calcolaLivelloPerDifferenzaIV()">Calcola Livello per Differenza IV</button>
+    <button onclick="calcolaLivelloPerDifferenzaIV()">Calcola Livello per Differenza IV</button>
 
     <button id="exportTableCSV">Esporta Tabella in CSV</button>
 
 
-<div class="table-container">
-  
-    <table>
-        <!-- Contenuto della tabella -->
-    </table>
-    
+    <div class="table-container">
 
-    
-    
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <table>
+            <!-- Contenuto della tabella -->
+        </table>
+
+
+
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <script>
-    
-  
-    document.getElementById('exportTableCSV').addEventListener('click', function() {
-    var table = document.querySelector('table');
-    var rows = table.querySelectorAll('tr');
-    var csv = [];
+        document.getElementById('exportTableCSV').addEventListener('click', function() {
+            var table = document.querySelector('table');
+            var rows = table.querySelectorAll('tr');
+            var csv = [];
 
-    rows.forEach(function(row) {
-        var cols = row.querySelectorAll('td, th');
-        var rowData = [];
-        cols.forEach(function(col) {
-            rowData.push(col.innerText);
+            rows.forEach(function(row) {
+                var cols = row.querySelectorAll('td, th');
+                var rowData = [];
+                cols.forEach(function(col) {
+                    rowData.push(col.innerText);
+                });
+                csv.push(rowData.join(','));
+            });
+
+            var csvString = csv.join('\n');
+            var link = document.createElement('a');
+            link.download = 'tabella.csv';
+            link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+            link.click();
         });
-        csv.push(rowData.join(','));
-    });
 
-    var csvString = csv.join('\n');
-    var link = document.createElement('a');
-    link.download = 'tabella.csv';
-    link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
-    link.click();
-});
 
-    
-    
-    
-    
-    
+
+
+
+
         const natureModifiers = {
-    allegra: { 'special-attack': 0.9, speed: 1.1 },
-    ardita: { attack: 1.0, 'special-defense': 1.0 },
-    audace: { attack: 1.1, speed: 0.9 },
-    birbona: { attack: 1.1, defense: 0.9 },
-    bizzarra: { attack: 1.0, defense: 1.0 },
-    calma: { 'special-defense': 1.1, attack: 0.9 },
-    decisa: { attack: 1.1, defense: 0.9 },
-    docile: { attack: 1.0, defense: 1.0 },
-    fiacca: { defense: 1.1, speed: 0.9 },
-    gentile: { 'special-defense': 1.1, defense: 0.9 },
-    ingenua: { speed: 1.1, 'special-defense': 0.9 },
-    lesta: { speed: 1.1, defense: 0.9 },
-    modesta: { 'special-attack': 1.1, attack: 0.9 },
-    neutra: { attack: 1.0, defense: 1.0 },
-    placida: { defense: 1.1, speed: 0.9 },
-    prepotente: { attack: 1.1, 'special-defense': 0.9 },
-    prudente: { 'special-defense': 1.1, 'special-attack': 0.9 },
-    quieta: { 'special-attack': 1.1, speed: 0.9 },
-    ritrosa: { attack: 1.0, defense: 1.0 },
-    scaltra: { speed: 1.1, defense: 0.9 },
-    schiva: { attack: 1.1, defense: 0.9 },
-    seria: { attack: 1.0, defense: 1.0 },
-    sicura: { defense: 1.1, speed: 0.9 },
-    timida: { speed: 1.1, attack: 0.9 },
-    vivace: { 'special-attack': 1.1, 'special-defense': 0.9 }
-};
+            allegra: {
+                'special-attack': 0.9,
+                speed: 1.1
+            },
+            ardita: {
+                attack: 1.0,
+                'special-defense': 1.0
+            },
+            audace: {
+                attack: 1.1,
+                speed: 0.9
+            },
+            birbona: {
+                attack: 1.1,
+                defense: 0.9
+            },
+            bizzarra: {
+                attack: 1.0,
+                defense: 1.0
+            },
+            calma: {
+                'special-defense': 1.1,
+                attack: 0.9
+            },
+            decisa: {
+                attack: 1.1,
+                defense: 0.9
+            },
+            docile: {
+                attack: 1.0,
+                defense: 1.0
+            },
+            fiacca: {
+                defense: 1.1,
+                speed: 0.9
+            },
+            gentile: {
+                'special-defense': 1.1,
+                defense: 0.9
+            },
+            ingenua: {
+                speed: 1.1,
+                'special-defense': 0.9
+            },
+            lesta: {
+                speed: 1.1,
+                defense: 0.9
+            },
+            modesta: {
+                'special-attack': 1.1,
+                attack: 0.9
+            },
+            neutra: {
+                attack: 1.0,
+                defense: 1.0
+            },
+            placida: {
+                defense: 1.1,
+                speed: 0.9
+            },
+            prepotente: {
+                attack: 1.1,
+                'special-defense': 0.9
+            },
+            prudente: {
+                'special-defense': 1.1,
+                'special-attack': 0.9
+            },
+            quieta: {
+                'special-attack': 1.1,
+                speed: 0.9
+            },
+            ritrosa: {
+                attack: 1.0,
+                defense: 1.0
+            },
+            scaltra: {
+                speed: 1.1,
+                defense: 0.9
+            },
+            schiva: {
+                attack: 1.1,
+                defense: 0.9
+            },
+            seria: {
+                attack: 1.0,
+                defense: 1.0
+            },
+            sicura: {
+                defense: 1.1,
+                speed: 0.9
+            },
+            timida: {
+                speed: 1.1,
+                attack: 0.9
+            },
+            vivace: {
+                'special-attack': 1.1,
+                'special-defense': 0.9
+            }
+        };
 
         async function getPokemonData(pokemonName) {
-          
+
             try {
                 const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
                 const data = await response.json();
@@ -349,334 +460,409 @@ div {
         }
 
         function calcolaAltraStatistica(baseStat, IV, EV, livello, natura, statistica) {
-    // Calcola la statistica base
-    let stat = Math.floor(((2 * baseStat + IV + Math.floor(EV / 4)) * livello / 100) + 5);
-    
-    // Verifica che il moltiplicatore di natura esista
-    if (natureModifiers[natura] && natureModifiers[natura][statistica]) {
-        const moltiplicatore = natureModifiers[natura][statistica];
-        // Verifica se il moltiplicatore è inferiore a 1 (riduzione)
-        if (moltiplicatore < 1) {
-            stat = Math.floor(stat / (1 / moltiplicatore));
-        } else {
-            stat = Math.floor(stat * moltiplicatore);
-        }
-    }
-    
-    return stat;
-}
+            // Calcola la statistica base
+            let stat = Math.floor(((2 * baseStat + IV + Math.floor(EV / 4)) * livello / 100) + 5);
 
-
-async function calcolaStatisticaPokemon() {
-  
-
-    const pokemonName = document.getElementById('pokemon').value.toLowerCase();
-    const statistica = document.getElementById('statistica').value;
-    const natura = document.getElementById('natura').value.toLowerCase();
-    const livelloInput = parseInt(document.getElementById('livello').value);
-    const valoreStatisticaInput = parseInt(document.getElementById('valoreStatistica').value);
-
-    const data = await getPokemonData(pokemonName);
-
-    const baseStat = data.stats.find(stat => stat.stat.name === statistica)?.base_stat;
-
-    const EV = 0;
-
-    let risultati = '<table><tr><th>Livello</th>';
-    for (let IV = 0; IV <= 31; IV++) {
-        risultati += `<th>IV ${IV}</th>`;
-    }
-    risultati += '</tr>';
-
-    for (let livello = 1; livello <= 100; livello++) {
-        risultati += `<tr><td>${livello}</td>`;
-        for (let IV = 0; IV <= 31; IV++) {
-            let risultato;
-            if (statistica === 'hp') {
-                risultato = calcolaPS(baseStat, IV, EV, livello);
-            } else {
-                risultato = calcolaAltraStatistica(baseStat, IV, EV, livello, natura, statistica);
+            // Verifica che il moltiplicatore di natura esista
+            if (natureModifiers[natura] && natureModifiers[natura][statistica]) {
+                const moltiplicatore = natureModifiers[natura][statistica];
+                // Verifica se il moltiplicatore è inferiore a 1 (riduzione)
+                if (moltiplicatore < 1) {
+                    stat = Math.floor(stat / (1 / moltiplicatore));
+                } else {
+                    stat = Math.floor(stat * moltiplicatore);
+                }
             }
-            const highlightClass = (livello === livelloInput && risultato === valoreStatisticaInput) ? 'highlight' : '';
-            risultati += `<td class="${highlightClass}">${risultato}</td>`;
+
+            return stat;
         }
-        risultati += '</tr>';
-    }
 
-    risultati += '</table>';
-    document.getElementById('risultato').innerHTML = risultati;
-}
 
-        
+        async function calcolaStatisticaPokemon() {
+
+
+            const pokemonName = document.getElementById('pokemon').value.toLowerCase();
+            const statistica = document.getElementById('statistica').value;
+            const natura = document.getElementById('natura').value.toLowerCase();
+            const livelloInput = parseInt(document.getElementById('livello').value);
+            const valoreStatisticaInput = parseInt(document.getElementById('valoreStatistica').value);
+
+            const data = await getPokemonData(pokemonName);
+
+            const baseStat = data.stats.find(stat => stat.stat.name === statistica) ? .base_stat;
+
+            const EV = 0;
+
+            let risultati = '<table><tr><th>Livello</th>';
+            for (let IV = 0; IV <= 31; IV++) {
+                risultati += `<th>IV ${IV}</th>`;
+            }
+            risultati += '</tr>';
+
+            for (let livello = 1; livello <= 100; livello++) {
+                risultati += `<tr><td>${livello}</td>`;
+                for (let IV = 0; IV <= 31; IV++) {
+                    let risultato;
+                    if (statistica === 'hp') {
+                        risultato = calcolaPS(baseStat, IV, EV, livello);
+                    } else {
+                        risultato = calcolaAltraStatistica(baseStat, IV, EV, livello, natura, statistica);
+                    }
+                    const highlightClass = (livello === livelloInput && risultato === valoreStatisticaInput) ? 'highlight' : '';
+                    risultati += `<td class="${highlightClass}">${risultato}</td>`;
+                }
+                risultati += '</tr>';
+            }
+
+            risultati += '</table>';
+            document.getElementById('risultato').innerHTML = risultati;
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
-        const livelloSelect = document.getElementById('livello');
+            const livelloSelect = document.getElementById('livello');
 
-        // Popola il selettore del livello
-        for (let i = 1; i <= 100; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            livelloSelect.appendChild(option);
-        }
-    });
-        
-      
-      
-      
-    
-    
-  
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const calcolaButton = document.querySelector('button[onclick="calcolaStatisticaPokemon()"]');
-    const statisticaSelect = document.getElementById('statistica');
-    const pokemonInput = document.getElementById('pokemon');
-    const naturaSelect = document.getElementById('natura');
-    const livelloSelect = document.getElementById('livello');
-    const valoreStatisticaSelect = document.getElementById('valoreStatistica');
-
-    function toggleCalcolaButton() {
-        if (pokemonInput.value && naturaSelect.value) {
-            calcolaButton.disabled = false;
-        } else {
-            calcolaButton.disabled = true;
-        }
-    }
-
-    function toggleValoreStatisticaSelect() {
-        if (livelloSelect.value) {
-            valoreStatisticaSelect.disabled = false;
-        } else {
-            valoreStatisticaSelect.disabled = true;
-        }
-    }
-
-    async function popolaValoreStatistica() {
-        const pokemonName = pokemonInput.value.toLowerCase();
-        const statistica = statisticaSelect.value;
-        const natura = naturaSelect.value.toLowerCase();
-        const livello = parseInt(livelloSelect.value);
-
-        const data = await getPokemonData(pokemonName);
-        if (!data) {
-            document.getElementById('risultato').textContent = `Errore nel recupero dei dati per ${pokemonName}.`;
-            return;
-        }
-
-        const baseStat = data.stats.find(stat => stat.stat.name === statistica)?.base_stat;
-        if (baseStat === undefined) {
-            document.getElementById('risultato').textContent = `Statistica ${statistica} non trovata per ${pokemonName}.`;
-            return;
-        }
-
-        
-        const EV = 0;
-
-        valoreStatisticaSelect.innerHTML = ''; // Pulisce le opzioni precedenti
-
-        let minStat = Infinity;
-        let maxStat = -Infinity;
-
-        for (let IV = 0; IV <= 31; IV++) {
-            let risultato;
-            if (statistica === 'hp') {
-                risultato = calcolaPS(baseStat, IV, EV, livello);
-            } else {
-                risultato = calcolaAltraStatistica(baseStat, IV, EV, livello);
+            // Popola il selettore del livello
+            for (let i = 1; i <= 100; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                livelloSelect.appendChild(option);
             }
-            
-            if (statistica === "hp" ) {
-              
-            if (risultato < minStat) minStat = risultato  ;
-            if (risultato > maxStat) maxStat = risultato ; 
-              
-            }
-            
-            else {
-             
-             if (risultato < minStat) minStat = Math.floor(risultato * 0.9) ;
-             
-            if (risultato > maxStat) {
-    maxStat = Math.floor(risultato)
-}
-
-              
-            }
-            
-            
-        }
-        
-        if (statistica === "hp" ){
-          
-          for (let stat = minStat; stat <= maxStat; stat++) {
-            const option = document.createElement('option');
-            option.value = stat;
-            option.textContent = stat;
-            valoreStatisticaSelect.appendChild(option);
-        }
-          
-        }
-        
-        else {
-        
-
-        for (let stat = minStat; stat <= maxStat *1.1; stat++) {
-            const option = document.createElement('option');
-            option.value = stat;
-            option.textContent = stat;
-            valoreStatisticaSelect.appendChild(option);
-        } }
-    }
-
-    // Inizializza lo stato del pulsante e del selettore
-    toggleCalcolaButton();
-    toggleValoreStatisticaSelect();
-
-    // Aggiungi listener per aggiornare lo stato del pulsante e del selettore quando cambiano i campi rilevanti
-    statisticaSelect.addEventListener('change', toggleCalcolaButton);
-    pokemonInput.addEventListener('input', toggleCalcolaButton);
-    naturaSelect.addEventListener('change', toggleCalcolaButton);
-    livelloSelect.addEventListener('change', () => {
-        toggleCalcolaButton();
-        toggleValoreStatisticaSelect();
-        popolaValoreStatistica();
-    });
-});
+        });
 
 
 
-async function livelloPerDifferenzaIV(pokemonName, statistica, natura, differenza) {
-    try {
-        const data = await getPokemonData(pokemonName);
-        if (!data) {
-            document.getElementById('risultato1').textContent = `Errore nel recupero dei dati per ${pokemonName}.`;
-            return;
-        }
 
-        const baseStat = data.stats.find(stat => stat.stat.name === statistica)?.base_stat;
-        if (baseStat === undefined) {
-            document.getElementById('risultato1').textContent = `Statistica ${statistica} non trovata per ${pokemonName}.`;
-            return;
-        }
 
-        const EV = 0;
-        const natureModifiers = getNatureModifiers(natura); // Funzione per ottenere i modificatori della natura
-        const table = document.querySelector('table tbody');
-        table.innerHTML = ''; // Pulisce la tabella
 
-        for (let livello = 1; livello <= 100; livello++) {
-            let stat29 = statistica === 'hp' ? calcolaPS(baseStat, 29, EV, livello) : calcolaAltraStatistica(baseStat, 29, EV, livello, natureModifiers);
-            let stat30 = statistica === 'hp' ? calcolaPS(baseStat, 30, EV, livello) : calcolaAltraStatistica(baseStat, 30, EV, livello, natureModifiers);
-            let stat31 = statistica === 'hp' ? calcolaPS(baseStat, 31, EV, livello) : calcolaAltraStatistica(baseStat, 31, EV, livello, natureModifiers);
-            
-            
-            let stat28 = statistica === 'hp' ? calcolaPS(baseStat, 28, EV, livello) : calcolaAltraStatistica(baseStat, 28, EV, livello, natureModifiers);
 
-            // Applica i modificatori della natura
-            if (natureModifiers.increase === statistica) {
-              stat28 *= 1.1;
-                stat29 *= 1.1;
-                stat30 *= 1.1;
-                stat31 *= 1.1;
-            } else if (natureModifiers.decrease === statistica) {
-              stat28 *= 0.9;
-                stat29 *= 0.9;
-                stat30 *= 0.9;
-                stat31 *= 0.9;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const calcolaButton = document.querySelector('button[onclick="calcolaStatisticaPokemon()"]');
+            const statisticaSelect = document.getElementById('statistica');
+            const pokemonInput = document.getElementById('pokemon');
+            const naturaSelect = document.getElementById('natura');
+            const livelloSelect = document.getElementById('livello');
+            const valoreStatisticaSelect = document.getElementById('valoreStatistica');
+
+            function toggleCalcolaButton() {
+                if (pokemonInput.value && naturaSelect.value) {
+                    calcolaButton.disabled = false;
+                } else {
+                    calcolaButton.disabled = true;
+                }
             }
 
-            // Arrotonda per difetto
-            stat28 = Math.floor(stat28);
-            stat29 = Math.floor(stat29);
-            stat30 = Math.floor(stat30);
-            stat31 = Math.floor(stat31);
+            function toggleValoreStatisticaSelect() {
+                if (livelloSelect.value) {
+                    valoreStatisticaSelect.disabled = false;
+                } else {
+                    valoreStatisticaSelect.disabled = true;
+                }
+            }
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
+            async function popolaValoreStatistica() {
+                const pokemonName = pokemonInput.value.toLowerCase();
+                const statistica = statisticaSelect.value;
+                const natura = naturaSelect.value.toLowerCase();
+                const livello = parseInt(livelloSelect.value);
+
+                const data = await getPokemonData(pokemonName);
+                if (!data) {
+                    document.getElementById('risultato').textContent = `Errore nel recupero dei dati per ${pokemonName}.`;
+                    return;
+                }
+
+                const baseStat = data.stats.find(stat => stat.stat.name === statistica) ? .base_stat;
+                if (baseStat === undefined) {
+                    document.getElementById('risultato').textContent = `Statistica ${statistica} non trovata per ${pokemonName}.`;
+                    return;
+                }
+
+
+                const EV = 0;
+
+                valoreStatisticaSelect.innerHTML = ''; // Pulisce le opzioni precedenti
+
+                let minStat = Infinity;
+                let maxStat = -Infinity;
+
+                for (let IV = 0; IV <= 31; IV++) {
+                    let risultato;
+                    if (statistica === 'hp') {
+                        risultato = calcolaPS(baseStat, IV, EV, livello);
+                    } else {
+                        risultato = calcolaAltraStatistica(baseStat, IV, EV, livello);
+                    }
+
+                    if (statistica === "hp") {
+
+                        if (risultato < minStat) minStat = risultato;
+                        if (risultato > maxStat) maxStat = risultato;
+
+                    } else {
+
+                        if (risultato < minStat) minStat = Math.floor(risultato * 0.9);
+
+                        if (risultato > maxStat) {
+                            maxStat = Math.floor(risultato)
+                        }
+
+
+                    }
+
+
+                }
+
+                if (statistica === "hp") {
+
+                    for (let stat = minStat; stat <= maxStat; stat++) {
+                        const option = document.createElement('option');
+                        option.value = stat;
+                        option.textContent = stat;
+                        valoreStatisticaSelect.appendChild(option);
+                    }
+
+                } else {
+
+
+                    for (let stat = minStat; stat <= maxStat * 1.1; stat++) {
+                        const option = document.createElement('option');
+                        option.value = stat;
+                        option.textContent = stat;
+                        valoreStatisticaSelect.appendChild(option);
+                    }
+                }
+            }
+
+            // Inizializza lo stato del pulsante e del selettore
+            toggleCalcolaButton();
+            toggleValoreStatisticaSelect();
+
+            // Aggiungi listener per aggiornare lo stato del pulsante e del selettore quando cambiano i campi rilevanti
+            statisticaSelect.addEventListener('change', toggleCalcolaButton);
+            pokemonInput.addEventListener('input', toggleCalcolaButton);
+            naturaSelect.addEventListener('change', toggleCalcolaButton);
+            livelloSelect.addEventListener('change', () => {
+                toggleCalcolaButton();
+                toggleValoreStatisticaSelect();
+                popolaValoreStatistica();
+            });
+        });
+
+
+
+        async function livelloPerDifferenzaIV(pokemonName, statistica, natura, differenza) {
+            try {
+                const data = await getPokemonData(pokemonName);
+                if (!data) {
+                    document.getElementById('risultato1').textContent = `Errore nel recupero dei dati per ${pokemonName}.`;
+                    return;
+                }
+
+                const baseStat = data.stats.find(stat => stat.stat.name === statistica) ? .base_stat;
+                if (baseStat === undefined) {
+                    document.getElementById('risultato1').textContent = `Statistica ${statistica} non trovata per ${pokemonName}.`;
+                    return;
+                }
+
+                const EV = 0;
+                const natureModifiers = getNatureModifiers(natura); // Funzione per ottenere i modificatori della natura
+                const table = document.querySelector('table tbody');
+                table.innerHTML = ''; // Pulisce la tabella
+
+                for (let livello = 1; livello <= 100; livello++) {
+                    let stat29 = statistica === 'hp' ? calcolaPS(baseStat, 29, EV, livello) : calcolaAltraStatistica(baseStat, 29, EV, livello, natureModifiers);
+                    let stat30 = statistica === 'hp' ? calcolaPS(baseStat, 30, EV, livello) : calcolaAltraStatistica(baseStat, 30, EV, livello, natureModifiers);
+                    let stat31 = statistica === 'hp' ? calcolaPS(baseStat, 31, EV, livello) : calcolaAltraStatistica(baseStat, 31, EV, livello, natureModifiers);
+
+
+                    let stat28 = statistica === 'hp' ? calcolaPS(baseStat, 28, EV, livello) : calcolaAltraStatistica(baseStat, 28, EV, livello, natureModifiers);
+
+                    // Applica i modificatori della natura
+                    if (natureModifiers.increase === statistica) {
+                        stat28 *= 1.1;
+                        stat29 *= 1.1;
+                        stat30 *= 1.1;
+                        stat31 *= 1.1;
+                    } else if (natureModifiers.decrease === statistica) {
+                        stat28 *= 0.9;
+                        stat29 *= 0.9;
+                        stat30 *= 0.9;
+                        stat31 *= 0.9;
+                    }
+
+                    // Arrotonda per difetto
+                    stat28 = Math.floor(stat28);
+                    stat29 = Math.floor(stat29);
+                    stat30 = Math.floor(stat30);
+                    stat31 = Math.floor(stat31);
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
            
             <td>${livello}</td> 
           
           <td>${stat28}</td>
             
             <td>${stat29}</td><td>${stat30}</td><td>${stat31}</td>`;
-            
-            if (differenza === '28-29' && stat29 > stat28) {
-                row.children[2].style.color = 'red';
-                row.children[1].style.color = 'red';
-            }
+
+                    if (differenza === '28-29' && stat29 > stat28) {
+                        row.children[2].style.color = 'red';
+                        row.children[1].style.color = 'red';
+                    }
 
 
-            if (differenza === '29-30' && stat30 > stat29) {
-                row.children[3].style.color = 'red';
-                row.children[2].style.color = 'red';
-            }
+                    if (differenza === '29-30' && stat30 > stat29) {
+                        row.children[3].style.color = 'red';
+                        row.children[2].style.color = 'red';
+                    }
 
-            if (differenza === '30-31' && stat31 > stat30) {
-                row.children[4].style.color = 'red';
-                row.children[3].style.color = 'red';
-            }
+                    if (differenza === '30-31' && stat31 > stat30) {
+                        row.children[4].style.color = 'red';
+                        row.children[3].style.color = 'red';
+                    }
 
-            table.appendChild(row);
+                    table.appendChild(row);
 
-            if ((differenza === '28-29' && stat29 > stat28 || differenza === '29-30' && stat30 > stat29) || (differenza === '30-31' && stat31 > stat30)) {
-                document.getElementById('risultato1').textContent = ``;
-                document.getElementById('risultato1').style.color = "white";
-                return;
+                    if ((differenza === '28-29' && stat29 > stat28 || differenza === '29-30' && stat30 > stat29) || (differenza === '30-31' && stat31 > stat30)) {
+                        document.getElementById('risultato1').textContent = ``;
+                        document.getElementById('risultato1').style.color = "white";
+                        return;
+                    }
+                }
+
+                document.getElementById('risultato1').textContent = `Non è possibile notare una differenza nella statistica ${statistica} per ${pokemonName} entro il livello 100.`;
+                document.getElementById('risultato1').style.color = "red";
+            } catch (error) {
+                document.getElementById('risultato1').textContent = `Errore: ${error.message}`;
             }
         }
 
-        document.getElementById('risultato1').textContent = `Non è possibile notare una differenza nella statistica ${statistica} per ${pokemonName} entro il livello 100.`;
-        document.getElementById('risultato1').style.color = "red";
-    } catch (error) {
-        document.getElementById('risultato1').textContent = `Errore: ${error.message}`;
-    }
-}
+        function getNatureModifiers(natura) {
+            const natureModifiers = {
+                ardita: {
+                    increase: null,
+                    decrease: null
+                },
+                schiva: {
+                    increase: 'attack',
+                    decrease: 'defense'
+                },
+                audace: {
+                    increase: 'attack',
+                    decrease: 'speed'
+                },
+                decisa: {
+                    increase: 'attack',
+                    decrease: 'special-attack'
+                },
+                birbona: {
+                    increase: 'attack',
+                    decrease: 'special-defense'
+                },
+                sicura: {
+                    increase: 'defense',
+                    decrease: 'attack'
+                },
+                docile: {
+                    increase: null,
+                    decrease: null
+                },
+                placida: {
+                    increase: 'defense',
+                    decrease: 'speed'
+                },
+                scaltra: {
+                    increase: 'defense',
+                    decrease: 'special-attack'
+                },
+                fiacca: {
+                    increase: 'defense',
+                    decrease: 'special-defense'
+                },
+                timida: {
+                    increase: 'speed',
+                    decrease: 'attack'
+                },
+                lesta: {
+                    increase: 'speed',
+                    decrease: 'defense'
+                },
+                seria: {
+                    increase: null,
+                    decrease: null
+                },
+                allegra: {
+                    increase: 'speed',
+                    decrease: 'special-attack'
+                },
+                ingenua: {
+                    increase: 'speed',
+                    decrease: 'special-defense'
+                },
+                modesta: {
+                    increase: 'special-attack',
+                    decrease: 'attack'
+                },
+                mite: {
+                    increase: 'special-attack',
+                    decrease: 'defense'
+                },
+                quieta: {
+                    increase: 'special-attack',
+                    decrease: 'speed'
+                },
+                ritrosa: {
+                    increase: null,
+                    decrease: null
+                },
+                ardente: {
+                    increase: 'special-attack',
+                    decrease: 'special-defense'
+                },
+                calma: {
+                    increase: 'special-defense',
+                    decrease: 'attack'
+                },
+                gentile: {
+                    increase: 'special-defense',
+                    decrease: 'defense'
+                },
+                vivace: {
+                    increase: 'special-defense',
+                    decrease: 'speed'
+                },
+                cauta: {
+                    increase: 'special-defense',
+                    decrease: 'special-attack'
+                },
+                furba: {
+                    increase: null,
+                    decrease: null
+                }
+            };
+            return natureModifiers[natura] || {
+                increase: null,
+                decrease: null
+            };
+        }
 
-function getNatureModifiers(natura) {
-    const natureModifiers = {
-        ardita: { increase: null, decrease: null },
-        schiva: { increase: 'attack', decrease: 'defense' },
-        audace: { increase: 'attack', decrease: 'speed' },
-        decisa: { increase: 'attack', decrease: 'special-attack' },
-        birbona: { increase: 'attack', decrease: 'special-defense' },
-        sicura: { increase: 'defense', decrease: 'attack' },
-        docile: { increase: null, decrease: null },
-        placida: { increase: 'defense', decrease: 'speed' },
-        scaltra: { increase: 'defense', decrease: 'special-attack' },
-        fiacca: { increase: 'defense', decrease: 'special-defense' },
-        timida: { increase: 'speed', decrease: 'attack' },
-        lesta: { increase: 'speed', decrease: 'defense' },
-        seria: { increase: null, decrease: null },
-        allegra: { increase: 'speed', decrease: 'special-attack' },
-        ingenua: { increase: 'speed', decrease: 'special-defense' },
-        modesta: { increase: 'special-attack', decrease: 'attack' },
-        mite: { increase: 'special-attack', decrease: 'defense' },
-        quieta: { increase: 'special-attack', decrease: 'speed' },
-        ritrosa: { increase: null, decrease: null },
-        ardente: { increase: 'special-attack', decrease: 'special-defense' },
-        calma: { increase: 'special-defense', decrease: 'attack' },
-        gentile: { increase: 'special-defense', decrease: 'defense' },
-        vivace: { increase: 'special-defense', decrease: 'speed' },
-        cauta: { increase: 'special-defense', decrease: 'special-attack' },
-        furba: { increase: null, decrease: null }
-    };
-    return natureModifiers[natura] || { increase: null, decrease: null };
-}
+        function calcolaLivelloPerDifferenzaIV() {
+            const pokemonName = document.getElementById('pokemon').value.toLowerCase();
+            const statistica = document.getElementById('statistica').value;
+            const natura = document.getElementById('natura').value.toLowerCase();
+            const differenza = document.getElementById('differenza').value;
 
-function calcolaLivelloPerDifferenzaIV() {
-    const pokemonName = document.getElementById('pokemon').value.toLowerCase();
-    const statistica = document.getElementById('statistica').value;
-    const natura = document.getElementById('natura').value.toLowerCase();
-    const differenza = document.getElementById('differenza').value;
-
-    if (pokemonName && statistica) {
-        livelloPerDifferenzaIV(pokemonName, statistica, natura, differenza);
-    } else {
-        document.getElementById('risultato1').textContent = 'Per favore, inserisci il nome del Pokémon e la statistica da calcolare.';
-        document.getElementById('risultato1').style.color = "red";
-    }
-}
-
+            if (pokemonName && statistica) {
+                livelloPerDifferenzaIV(pokemonName, statistica, natura, differenza);
+            } else {
+                document.getElementById('risultato1').textContent = 'Per favore, inserisci il nome del Pokémon e la statistica da calcolare.';
+                document.getElementById('risultato1').style.color = "red";
+            }
+        }
     </script>
 </body>
+
 </html>
