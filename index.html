@@ -16,6 +16,8 @@
             height: 100vh;
             display: grid;
             justify-items: center;
+            font-family: 'Times New Roman', Times, serif;
+            letter-spacing: 1px;
         }
         
         #containerTitle {
@@ -28,7 +30,6 @@
             font-size: 70px;
             font-family: sans-serif;
             background: rgb(0, 0, 0);
-            ;
         }
         
         #txt::before {
@@ -277,7 +278,7 @@
     <div class="container">
         <div class="box">
             <span></span>
-            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">IVS PREDICT</a>
+            <a class="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">IVS  PREDICT</a>
         </div>
         <div class="border-blur"></div>
 
@@ -285,21 +286,21 @@
 
         <div class="box">
             <span></span>
-            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">EVS TRACKER</a>
+            <a class="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">EVS  TRACKER</a>
         </div>
         <div class="border-blur"></div>
 
 
         <div class="box">
             <span></span>
-            <a id="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">STAT PREDICT</a>
+            <a class="link" href="https://ministro97.github.io/StatDex/EVsTracker.html" class="clickable-area">STAT  PREDICT</a>
         </div>
         <div class="border-blur"></div>
 
 
         <div class="box">
             <span></span>
-            <a id="link" href="https://ministro97.github.io/StatDex/percentageSTat.html" class="clickable-area">% STAT</a>
+            <a class="link" href="https://ministro97.github.io/StatDex/percentageSTat.html" class="clickable-area">%  STAT</a>
         </div>
         <div class="border-blur"></div>
 
@@ -320,19 +321,21 @@
 
 
     <script>
-        document.getElementById('link').addEventListener('click', function(event) {
-            event.preventDefault(); // Previene il comportamento predefinito del link
-            document.getElementsByClassName('ball')[0].style.display = "block";
+        document.querySelectorAll('.link').forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Previene il comportamento predefinito del link
+                document.getElementsByClassName('ball')[0].style.display = "block";
 
-            document.getElementsByClassName('container')[0].style.display = "none";
-            document.getElementById('containerTitle').style.display = "none";
-            const requestIndicator = document.querySelector('.request-indicator');
-            requestIndicator.classList.add('pulling'); // Aggiunge la classe pulling
+                document.getElementsByClassName('container')[0].style.display = "none";
+                document.getElementById('containerTitle').style.display = "none";
+                const requestIndicator = document.querySelector('.request-indicator');
+                requestIndicator.classList.add('pulling'); // Aggiunge la classe pulling
 
-            setTimeout(function() {
-                requestIndicator.classList.remove('pulling'); // Rimuove la classe pulling dopo 2 secondi
-                window.location.href = event.target.href; // Reindirizza alla pagina
-            }, 4000); // 2000 millisecondi = 2 secondi
+                setTimeout(function() {
+                    requestIndicator.classList.remove('pulling'); // Rimuove la classe pulling dopo 2 secondi
+                    window.location.href = event.target.href; // Reindirizza alla pagina
+                }, 2000); // 2000 millisecondi = 2 secondi
+            });
         });
     </script>
 </body>
