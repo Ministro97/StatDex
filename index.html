@@ -335,12 +335,12 @@
                 setTimeout(function() {
                     requestIndicator.classList.remove('pulling'); // Rimuove la classe pulling dopo 2 secondi
                     window.location.href = event.target.href; // Reindirizza alla pagina
-                     setTimeout(() => {
+                    setTimeout(() => {
                             document.getElementsByClassName('ball')[0].style.display = "none";
                             document.getElementsByClassName('container')[0].style.display = "block";
                             document.getElementById('containerTitle').style.display = "block";
                         },
-                        2000);
+                        5000);
 
                 }, 4000); 
             });
