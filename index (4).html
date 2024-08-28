@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéML</title>
+  
+  
+
+  <!-- Bootstrap CSS  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <!-- Bootstrap JavaScript Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+  <!-- Chart.js for plotting -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Math.js for polynomial regression -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    body {
+    background-color: #1a1a1a;
+    font-family: 'Roboto', sans-serif;
+    color: #e0e0e0;
+   padding-top: 30px;
+}
+
+
+.container-fluid {
+    padding: 30px;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin: auto;
+    border: 1px solid #00ffcc;
+    
+}
+
+h2 {
+    color: #00ffcc;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-shadow: 2px 2px #005f5f;
+}
+
+h3 {
+    color: #00ffcc;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 2px 2px #005f5f;
+}
+
+.input-group-text {
+    background-color: #333;
+    border: 1px solid #00ffcc;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.form-control {
+    background-color: #333;
+    border: 1px solid #00ffcc;
+    border-radius: 5px;
+    color: #e0e0e0;
+}
+
+.btn-outline-success, .btn-outline-primary{
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: #00ffcc;
+    border-color: #00ffcc;
+    color: #1a1a1a;
+}
+
+#regressionChart {
+    margin-top: 30px;
+}
+
+#predictionResult, #regressionEquation {
+    color: #00ffcc;
+    font-weight: 500;
+}
+
+    
+    #risultato {
+   
+      /* Inizialmente nascosto */
+     
+      font-size: 12px;
+      color: black;
+      background-color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 5px 5px;
+      text-align: center;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      display: inline-block;
+      
+    }
+    
+
+   
+
+
+
+
+#ivInputs {
+  display: none;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#predictStatInput {
+  background-color: transparent;
+  border: 1px solid #00ffcc;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  
+  display: inline-block;
+  vertical-align: middle;
+  width: 200px; /* Aggiungi una larghezza per allineare meglio */
+}
+
+#predictStatInput::placeholder {
+  color: #00ffcc;
+}
+
+#maxStatButton {
+  background-color: transparent;
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 10px #00ffcc;
+  transition: all 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#maxStatButton:hover {
+  background-color: #00ffcc;
+  color: #000;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 20px #00ffcc;
+}
+
+    
+  </style>
+</head>
+<body>
+  
+
+
+  <div class="container-fluid text-center">
+    
+   
+    <h3>PokéML <i id="refreshIcon" class="fas fa-chart-line" style="cursor: pointer;"></i></h3>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text"><b>Nome del Pokémon</b></span>
+    
+    <input type="text" class="form-control" placeholder="" id="pokemon" autocomplete="on">
+    
+          <button style="display: none;" id="risultato" onclick="calcolaStatisticaPokemon()">Conferma</button>
+
+</div>
+
+
+
+    
+    <div class="input-group mb-3">
+      <span class="input-group-text"><b>Trend livelli</b></span>
+      <input type="text" class="form-control" placeholder="" id="x_values" autocomplete="on">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text"><b>Trend statistica</b></span>
+      <input type="text" class="form-control" placeholder="" id="y_values">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text"><b>Livello da prevedere</b></span>
+      <input type="text" class="form-control" placeholder="" id="predict_level" autocomplete="on">
+    </div>
+    
+    <div class="input-group mb-3">
+    <span class="input-group-text"><b>Statistica da prevedere</b></span>
+    <select class="form-select" id="statistica"><option value=""></option>
+        <option value="hp">PS</option>
+        <option value="attack">Attacco</option>
+        <option value="defense">Difesa</option>
+        <option value="special-attack">Attacco Speciale</option>
+        <option value="special-defense">Difesa Speciale</option>
+        <option value="speed">Velocità</option>
+    </select>
+</div>
+    
+      
+    
+    
+    
+    <div class="input-group mb-3">
+      <span class="input-group-text"><b>Modello di apprendimento </b></span>
+      <select class="form-select" id="regression_type">
+        
+        <option value="linear">Lineare SV </option>
+        <option value="polynomial">Adattivo SV</option>
+      </select>
+    </div>
+    <div class="input-group mb-3" id="polynomial_degree_group" style="display: none;">
+      <span class="input-group-text" style="display: none;"></span>
+      <input type="number" class="form-control" placeholder="Grado del polinomio" id="polynomial_degree" value="2" style="display: none;">
+      
+    </div>
+    
+
+<div id="ivInputs" style="display: none;">
+  
+
+  <button  id="maxStatButton">Inferenza IV</button>
+
+
+
+
+</div>
+
+<div style="display: none;">
+  <input id="predictStatInput" type="text" placeholder="Max. Stat. x Liv.">
+</div>
+
+
+    
+    <button class="btn btn-outline-success" onclick="developModel()">Genera modello
+    
+    </button>
+    <hr class="custom-line">
+    
+    
+    
+    
+    <div>
+      
+      <p id="r2Display" style="display:none;">\( R^2 \): <span id="r2Value"></span></p>
+
+    
+    
+    <p id="errorDisplay"></p>
+    
+    
+    </div>
+    
+      <p id="resultText" style="display: none; color: #00ffcc;"></p>
+
+    <h6 id="predictionResult" style="margin-top: 20px; margin-bottom: 8px;"></h6>
+    
+    <canvas id="regressionChart"></canvas>
+    <div>
+      
+      
+        <code>
+          
+            <h6 id="regressionEquation" style="margin-top: 20px; margin-bottom: 8px; text-align:center;"></h6>
+        </code>
+    </div>
+    
+    <div id="exportDiv" style="display: none;">
+         <button id="exportCSV" class="btn btn-outline-primary">Esporta in CSV</button>
+         
+         
+
+<button id="export" class="btn btn-outline-primary">Salva grafico</button>
+    </div>
+    
+ 
+
+</div>
+
+  <script>
+  
+  document.getElementById('statistica').addEventListener('change', function() {
+    var selectedValue = this.value;
+    if (selectedValue) {
+        document.getElementById('risultato').style.display = 'block';
+    } else {
+        document.getElementById('risultato').style.display = 'none';
+    }
+});
+
+  
+  var confirm = false
+  
+  async function getPokemonData(pokemonName) {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Errore nel recupero dei dati:', error);
+    }
+}
+function calcolaPS(basePS, IV, EV, livello) {
+    return Math.floor(((2 * basePS + IV + Math.floor(EV / 4)) * livello / 100) + livello + 10);
+}
+function calcolaAltraStatistica(baseStat, IV, EV, livello) {
+    let stat = Math.floor(((2 * baseStat + IV + Math.floor(EV / 4)) * livello / 100) + 5);
+    return stat;
+}
+async function calcolaStatisticaPokemon() {
+  confirm = true
+  document.getElementById("risultato").style.display = "none";
+    const pokemonName = document.getElementById('pokemon').value.toLowerCase();
+    const statistica = document.getElementById('statistica').value;
+
+    const data = await getPokemonData(pokemonName);
+    if (!data) {
+        document.getElementById('risultato').textContent = `Errore nel recupero dei dati per ${pokemonName}.`;
+        return;
+    }
+
+    const baseStat = data.stats.find(stat => stat.stat.name === statistica)?.base_stat;
+    if (baseStat === undefined) {
+        document.getElementById('risultato').textContent = `Statistica ${statistica} non trovata per ${pokemonName}.`;
+        return;
+    }
+
+    const IV = 31;
+    const EV = 0;
+    const livello = 100;
+
+    let risultato;
+    if (statistica === 'hp') {
+        risultato = calcolaPS(baseStat, IV, EV, livello);
+    } else {
+        risultato = calcolaAltraStatistica(baseStat, IV, EV, livello);
+    }
+
+    
+document.getElementById('predictStatInput').value = risultato;
+
+
+}
+
+  
+  
+  
+  
+  
+  
+  
+    
+    document.getElementById('regression_type').addEventListener('change', function() {
+  var regressionType = document.getElementById('regression_type').value;
+  if (regressionType === 'polynomial') {
+    document.getElementById('polynomial_degree_group').style.display = 'block';
+  } else {
+    document.getElementById('polynomial_degree_group').style.display = 'none';
+  }
+});
+
+
+
+document.getElementById('refreshIcon').onclick = () => {
+  location.reload();
+};
+
+
+var regressor; // Definisci regressor a livello globale
+
+function developModel() {
+
+  
+  MathJax.typeset();
+
+  var livelliInput = document.getElementById('x_values').value;
+  var statisticheInput = document.getElementById('y_values').value;
+  var regressionType = document.getElementById('regression_type').value;
+
+  // Controllo se i campi sono vuoti
+  if (!livelliInput || !statisticheInput) {
+    alert("Per favore, inserisci i dati nei campi richiesti.");
+    return;
+  }
+
+  // Controllo se i dati sono separati da virgola
+  if (!livelliInput.includes(",") || !statisticheInput.includes(",")) {
+    alert("Per favore, inserisci i dati separati da virgola.");
+    return;
+  }
+
+  var livelli = livelliInput.split(",").map(Number);
+  var statistiche = statisticheInput.split(",").map(Number);
+
+  // Controllo se i dati sono numerici
+  if (livelli.some(isNaN) || statistiche.some(isNaN)) {
+    alert("Per favore, inserisci solo numeri separati da virgola.");
+    return;
+  }
+
+  // Controllo se ci sono almeno 3 valori
+  if (livelli.length < 3 || statistiche.length < 3) {
+    alert("Per favore, inserisci almeno 3 valori per ciascun campo.");
+    return;
+  }
+  
+  // Controllo se il pulsante "risultato" è stato premuto
+    if (!confirm) {
+        alert("Per favore, clicca sul pulsante 'Conferma'.");
+        return;
+    }
+
+  if (regressionType === 'linear') {
+    regressor = linearRegression(livelli, statistiche);
+    document.getElementById('regressionEquation').innerHTML = "<span style='color: white; font-family: Roboto, sans-serif;'>Funzione predittiva</span><br> f(x) = <span style='font-size: small;'>" + "<i>"  + String(regressor['slope'].toFixed(4)) + " * x + " + String(regressor['intercept'].toFixed(4)) + "</span>" + "</i>";
+  } else {
+    var degree = Number(document.getElementById('polynomial_degree').value);
+    regressor = polynomialRegression(livelli, statistiche, degree);
+    document.getElementById('regressionEquation').innerHTML = regressor['equation'];
+  }
+
+  var predictLevels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  var predictedValues = predictLevels.map(level => regressionType === 'linear' ? predictLinear(regressor, level) : predictPolynomial(regressor['coefficients'], level));
+
+  plotRegressionChart(livelli, statistiche, regressor['y_hat'], regressor['r2'], predictLevels, predictedValues);
+
+  var predictLevel = Number(document.getElementById('predict_level').value);
+  var predictedStat = regressionType === 'linear' ? predictLinear(regressor, predictLevel) : predictPolynomial(regressor['coefficients'], predictLevel);
+  document.getElementById('predictionResult').innerHTML = 
+    "<b style='color: white;'>Previsione per livello " + 
+    "<span style='color: #00ffcc;'>" + predictLevel + "</span>: </b> " + 
+    "<span style='color: white;'>" + predictedStat.toFixed(2) + "</span> (" + 
+    "<span style='color: #00ffcc;'>" + Math.round(predictedStat) + "</span>)";
+    
+  document.getElementsByClassName('btn btn-outline-success')[0].style.display = 'none';
+  document.getElementById('ivInputs').style.display = 'block';
+  document.getElementById("exportDiv").style.display= "block";
+ 
+
+  var txt = document.getElementById('predictionResult').textContent;
+  var match = txt.match(/\(([^)]+)\)/);
+  var txtMatch = match[1];
+  console.log(txtMatch); // 
+
+
+
+  document.getElementById('maxStatButton').addEventListener('click', function() {
+    var maxStatValue = document.getElementById('predictStatInput').value
+    
+
+    document.getElementById('predictStatInput').style.display = 'none';
+    document.getElementById('maxStatButton').style.display = 'none';
+
+    var resultText = document.getElementById('resultText');
+    var s = maxStatValue - txtMatch;
+    var ivs = 31 - s;
+
+    resultText.innerHTML = "<b><span style='color: white; font-family: sans-serif';>Previsione IV: </span></b>" + ivs;
+    resultText.style.display = 'block';
+  });
+
+  if (statistiche.length > 2) {
+    var errorSum = 0;
+    for (let i = 0; i < statistiche.length; i++) {
+      errorSum += Math.abs(statistiche[i] - regressor['y_hat'][i]);
+    }
+    var meanError = errorSum / statistiche.length;
+    var errorPercentage = (meanError / Math.max(...statistiche)) * 100;
+
+    var color;
+    if (errorPercentage < 0.84) {
+      color = '#00ff00';
+    } else if (errorPercentage >= 0.85 && errorPercentage <= 0.99) {
+      color = 'yellow';
+    } else {
+      color = 'red';
+    }
+
+    document.getElementById('errorDisplay').innerHTML = 
+      "<b style='color: white;'>MAE: </b>" + 
+      "<span style='color: " + color + ";'>" + errorPercentage.toFixed(2) + "</span>";
+  } else {
+    document.getElementById('errorDisplay').innerHTML = 
+      "<b style='color: white;'>MAE: </b>" + 
+      "<span style='color: #ff0000;'> non valutabile</span>";
+  }
+}
+
+function linearRegression(x_values, y_values) {
+  let regressor = {};
+
+  // Calcola la media e la deviazione standard
+  const mean = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+  const stdDev = arr => Math.sqrt(arr.map(x => Math.pow(x - mean(arr), 2)).reduce((a, b) => a + b) / arr.length);
+
+  const x_mean = mean(x_values);
+  const y_mean = mean(y_values);
+  const x_std = stdDev(x_values);
+  const y_std = stdDev(y_values);
+
+  // Normalizza i valori
+  const x_normalized = x_values.map(x => (x - x_mean) / x_std);
+  const y_normalized = y_values.map(y => (y - y_mean) / y_std);
+
+  // Calcola la regressione lineare sui dati normalizzati
+  let slope_numerator = 0, slope_denominator = 0;
+  for (let i = 0; i < x_normalized.length; i++) {
+    slope_numerator += (x_normalized[i]) * (y_normalized[i]);
+    slope_denominator += Math.pow((x_normalized[i]), 2);
+  }
+  const slope = slope_numerator / slope_denominator;
+  const intercept = y_mean - slope * x_mean * (y_std / x_std);
+
+  regressor['slope'] = slope * (y_std / x_std);
+  regressor['intercept'] = intercept;
+
+  // Calcola y_hat
+  const y_hat = x_values.map(x => x * regressor['slope'] + regressor['intercept']);
+  regressor['y_hat'] = y_hat;
+
+  // Calcola R^2
+  let residual_sum_of_squares = 0, total_sum_of_squares = 0;
+  for (let i = 0; i < y_values.length; i++) {
+    residual_sum_of_squares += Math.pow((y_hat[i] - y_values[i]), 2);
+    total_sum_of_squares += Math.pow((y_values[i] - y_mean), 2);
+  }
+  const r2 = 1 - residual_sum_of_squares / total_sum_of_squares;
+  regressor['r2'] = r2;
+
+  return regressor;
+}
+
+function predictLinear(regressor, level){
+  return regressor['slope'] * level + regressor['intercept'];
+}
+
+function polynomialRegression(x_values, y_values, degree){
+  var x_matrix = [];
+  for (var i = 0; i < x_values.length; i++) {
+    var row = [];
+    for (var j = 0; j <= degree; j++) {
+      row.push(Math.pow(x_values[i], j));
+    }
+    x_matrix.push(row);
+  }
+
+  var y_matrix = y_values.map(y => [y]);
+
+  var x_transpose = math.transpose(x_matrix);
+  var x_transpose_x = math.multiply(x_transpose, x_matrix);
+  var x_transpose_y = math.multiply(x_transpose, y_matrix);
+
+  var coefficients = math.lusolve(x_transpose_x, x_transpose_y).map(row => row[0]);
+
+  var y_hat = x_values.map(x => {
+    return coefficients.reduce((sum, coeff, index) => sum + coeff * Math.pow(x, index), 0);
+  });
+
+  var residual_sum_of_squares = 0, total_sum_of_squares = 0;
+  var y_mean = y_values.reduce((a, b) => a + b, 0) / y_values.length;
+  for (var i = 0; i < y_values.length; i++) {
+    residual_sum_of_squares += Math.pow((y_hat[i] - y_values[i]), 2);
+    total_sum_of_squares += Math.pow((y_values[i] - y_mean), 2);
+  }
+  var r2 = 1 - residual_sum_of_squares / total_sum_of_squares;
+
+  var equation = "<span style='color: white; font-family: sans-serif;'>Funzione predittiva</span><br>" + "f(x) = " +
+               coefficients.map((coeff, index) => `<span style= 'font-size: small;'><i>${coeff.toFixed(2)}x^${index}</i></span>`).join(' + ');
+
+  return { coefficients, y_hat, r2, equation };
+}
+
+function predictPolynomial(coefficients, level){
+  return coefficients.reduce((sum, coeff, index) => sum + coeff * Math.pow(level, index), 0);
+}
+
+
+function plotRegressionChart(x_values, y_values, y_hat, r2, predictedLevels, predictedValues) {
+  const ctx = document.getElementById('regressionChart').getContext('2d');
+
+  // Combina i valori originali e previsti
+  const allXValues = x_values.concat(predictedLevels);
+  const allYValues = y_values.concat(predictedValues);
+  const allYHat = y_hat.concat(predictedValues);
+
+  // Ricalcola R^2 per tutti i valori
+  const y_mean = allYValues.reduce((a, b) => a + b, 0) / allYValues.length;
+  let residual_sum_of_squares = 0,
+    total_sum_of_squares = 0;
+  for (let i = 0; i < allYValues.length; i++) {
+    residual_sum_of_squares += Math.pow((allYHat[i] - allYValues[i]), 2);
+    total_sum_of_squares += Math.pow((allYValues[i] - y_mean), 2);
+  }
+  const newR2 = 1 - residual_sum_of_squares / total_sum_of_squares;
+
+  // Imposta il colore della scritta in base al valore di R^2
+  let r2Color;
+  if (r2 >= 0.75) {
+    r2Color = '#00ff00';
+  } else if (r2 >= 0.5) {
+    r2Color = 'yellow';
+  } else {
+    r2Color = 'red';
+  }
+
+  document.getElementById("r2Display").style.display = "block";
+  document.getElementById("r2Value").textContent = String(r2.toFixed(4));
+  document.getElementById("r2Value").style.color = r2Color;
+
+  const mixedChart = new Chart(ctx, {
+    data: {
+      datasets: [{
+        type: 'line',
+        label: 'Linea di Best Fit',
+        data: allXValues.map((x, index) => ({ x: x, y: allYHat[index] })),
+        borderColor: '#00ffcc',
+        backgroundColor: 'rgba(0, 255, 204, 0.2)',
+        fill: false,
+        tension: 0.4,
+        borderWidth: 2,
+        pointRadius: 0
+      }, {
+        type: 'scatter',
+        label: 'Valori reali',
+        data: y_values.map((y, index) => ({ x: x_values[index], y: y })),
+        backgroundColor: '#ff00ff',
+        borderColor: '#ff00ff',
+        borderWidth: 1,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }, {
+        type: 'scatter',
+        label: 'Valori predetti',
+        data: predictedLevels.map((level, index) => ({x:level, y: predictedValues[index] })),
+        backgroundColor: '#ff1493',
+        borderColor: '#00ff00',
+        borderWidth: 1,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }],
+      labels: allXValues
+    },
+    options: {
+      scales: {
+        x: {
+ 
+          type: 'linear',
+          position: 'bottom',
+          grid: {
+            color: '#444'
+          },
+          ticks: {
+            color: '#00ffcc'
+          }
+        },
+        y: {
+          grid: {
+            color: '#444'
+          },
+          ticks: {
+            color: '#00ffcc'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#00ffcc'
+          }
+        },
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: 'xy'
+          },
+          zoom: {
+            wheel: {
+              enabled: true
+            },
+            pinch: {
+              enabled: true
+            },
+            mode: 'xy'
+          }
+        }
+      },
+      onClick: (event, elements) => {
+        if (elements.length > 0) {
+          const elementIndex = elements[0].index;
+          const realValue = allYValues[elementIndex];
+          const predictedValue = allYHat[elementIndex];
+          document.getElementById('valueDisplay').innerHTML =
+            `<b>Valore Reale:</b> ${realValue.toFixed(2)}<br><b>Valore Previsto:</b> ${predictedValue.toFixed(2)}`;
+        }
+      }
+    }
+  });
+
+
+  // Collega la funzionalità di salvataggio al pulsante esistente
+  document.getElementById('export').onclick = () => {
+    const link = document.createElement('a');
+    link.href = document.getElementById('regressionChart').toDataURL('image/png');
+    link.download = 'regression_chart.png';
+    link.click();
+  };
+}
+
+document.getElementById('exportCSV').addEventListener('click', function() {
+  var livelli = document.getElementById('x_values').value.split(",").map(Number);
+  var statistiche = document.getElementById('y_values').value.split(",").map(Number);
+  var y_hat = regressor['y_hat']; // Assicurati che 'regressor' sia accessibile qui
+
+  var csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Livelli,Statistiche,Predizioni\n";
+
+  for (var i = 0; i < livelli.length; i++) {
+    csvContent += livelli[i] + "," + statistiche[i] + "," + y_hat[i] + "\n";
+  }
+
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "regression_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+
+
+
+
+
+    
+  </script>
+  
+  
+
+</body>
+</html>
