@@ -336,14 +336,17 @@
                     requestIndicator.classList.remove('pulling'); // Rimuove la classe pulling dopo 2 secondi
                     window.location.href = event.target.href; // Reindirizza alla pagina
                  
-window.onload = function() {
-    setTimeout(function() {
-   document.getElementsByClassName('ball')[0].style.display = "none";
-                            document.getElementsByClassName('container')[0].style.display = "block";
-                            document.getElementById('containerTitle').style.display = "block";
-    }, 5000); 
-};
+ 
 
+
+                    window.onload = function() {
+    if (window.location.href === "https://ministro97.github.io/StatDex/EVsTracker.html") {
+        setTimeout(function() {
+            // Il codice da eseguire dopo il timeout
+
+        }, 3000); // 3000 millisecondi = 3 secondi
+    }
+};
 
 
                     
