@@ -395,28 +395,43 @@
 
 
 
-
-        <div class="container">
+  <div class="container">
             <div class="news-container">
                 <div class="title">
                     Dr. Min adv
                 </div>
 
-                <ul>
-                    <li>
-                        <b>Pietratante:</b>
-                    </li>
+                <ul id="news-list">
 
-                    <li>
-                        Lorem ipsum dolor sit
-                    </li>
+                    <li>Lo sapevi che gli strumenti Vigor (Vigorlente, Vigorfascia ecc..), se tenuti da un genitore, assicurano al 100% che l’IV della rispettiva abilità di cui normalmente accelerano l’aumento degli EV venga ereditato dal futuro nascituro;</li>
+                    <li>Lo sapevi che la pietrastante assicura, al 100%, che il nascituro erediti la natura del Pokémon genitore che la tiene;</li>
+                    <li>Lo sapevi che Destincomune assicura che 5 IV presi da entrambi i genitori in maniera casuale (50% dal maschio e 50% dalla femmina) vengano ereditati dal nascituro;</li>
+                    <li>Lo sapevi che l'abilità Sincronismo fa sì che il Pokémon incontrato abbia il 50% di possibilità di avere la stessa natura del Pokémon con Sincronismo, invece di essere generata casualmente;</li>
+                    <li>Lo sapevi che l'abilità Traccia permette di controllare l’abilità del Pokémon incontrato prima di catturarlo;</li>
+                    <li>Lo sapevi che l'abilità Incantevole aumenta la probabilità di incontrare pokèmon del sesso opposto al Pokémon con questa abilità al 66%. Risulta essere molto utile per quei Pokémon che appaiono preferenzialmente di un determinato sesso,
+                        maschio o femmina che sia;</li>
+                    <li>Lo sapevi che se un squadra hai un Pokémon con l'abilità corpodifuoco, le uova si schiuderanno più rapidamente;</li>
+                    <li>Lo sapevi che il nascituro ha il 90% di probabilità di ereditare l’abilità normale della madre e per il restante 10% l'abilità normale del padre;</li>
+                    <li>Lo sapevi che per quanto riguarda l’abilità nascosta (che è sempre e solo una) l’ereditarietà è ancora materna, ma con una percentuale inferiore: 60%. Nel restante 40% dei casi, il neonato avrà l’abilità normale;</li>
+                    <li>Lo sapevi che alcuni Pokemon possono avere alcune mosse esclusivamente se ereditate da alcuni genitori appartenenti a specie diverse, ma che fan parte dello stesso gruppo uova;</li>
+                    <li>Lo sapevi che alcune mosse uovo sono particolarmente utili, e per questo avere un Pokemon che le ha apprese può dargli una marcia in più nel competitivo;</li>
+                    <li>Lo sapevi che una volta che un Pokemon avrà ereditato la mossa uovo, potrà trasmetterla direttamente alla sua prole;</li>
+                    <li>Lo sapevi che si possono far ereditare alla prole anche mosse che, normalmente, vengono imparate dalla specie in questione a livello molto alto, risparmiandoti parecchie ore di allenamento;</li>
+                    <li>Lo sapevi che una buona partenza per il processo di breeding sarebbe avere dei Pokémon genitori catturati nel Safari Amici, in quanto in esso tutti i Pokémon che troverete nell’erba alta avranno sicuramente almeno 2 IV al 31;</li>
+                    <li>Lo sapevi che i Pokémon baby, avranno sempre e comunque almeno 3 IV al 31;</li>
+                    <li>Lo sapevi che diverse specie hanno diversi tempi di schiusa. I più veloci a schiudere sono i Magikarp, i più lenti sono i Pokémon di tipo Drago;</li>
+                    <li>Lo sapevi che gli Individual Values (o Valori Individuali o IV o VI), sono dei valori (da 0 a 31) che influenzano la statistica interessata, vengono considerati come il DNA dei Pokémon;</li>
+                    <li>Lo sapevi che la Natura di un Pokémon aumenta una statistica del 10% a discapito di un’altra, riducendola del 10%;</li>
+                    <li>Lo sapevi che le statistiche base del Pokémon, sono serie di valori che sono tipici di quella specie di Pokémon;</li>
+                    <li>Lo sapevi che gli Effort Values (o Punti Allenamento o EV o PA), sono dei valori che vengono assegnati al Pokémon battendo alcune determinate specie di Pokémon, essi possono essere un massimo di 510, e possono essere distribuiti a
+                        piacimento su tutte le statistiche interessate;</li>
 
-                    <li>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam!
-                    </li>
+                    <li>Lo sapevi che i Gruppi Uova, determinano la compatibilità tra Pokémon quando questi devono accoppiarsi, similmente ai tipi, ciascuna specie di Pokémon può appartenere ad uno o due Gruppi Uova;</li>
+                    <li>Lo sapevi che due Pokémon appartenenti allo stesso Gruppo Uova possono accoppiarsi per dare alla luce delle Uova, ed in alcuni casi è possibile sfruttare questa meccanica per poter apprendere mosse Uovo, mosse speciali che spesso il
+                        Pokémon non può apprendere in altri modi;</li>
                 </ul>
             </div>
-
+        </div>
 
             <br><br>
 
@@ -429,6 +444,20 @@
 
 
     <script>
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+            const list = document.getElementById('news-list');
+            for (let i = list.children.length; i >= 0; i--) {
+                list.appendChild(list.children[Math.random() * i | 0]);
+            }
+        });
+
+
+
+
+
+
+        
         document.querySelectorAll('.link').forEach(function(link) {
             link.addEventListener('click', function(event) {
                 event.preventDefault(); // Previene il comportamento predefinito del link
