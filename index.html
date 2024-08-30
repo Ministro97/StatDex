@@ -84,7 +84,7 @@
             box-sizing: border-box;
         }
         
-        .container {
+        .containerBTN {
             vertical-align: baseline;
         }
         
@@ -265,6 +265,81 @@
                 box-shadow: 0 0 10px -2px #1300ea inset;
             }
         }
+
+
+
+
+
+
+
+
+   .news-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            font-family: "Roboto", sans-serif;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .news-container .title {
+            font-family: 'Times New Roman', Times, serif;
+            position: absolute;
+            background: rgb(216, 96, 255);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: rgb(4, 4, 4);
+            font-weight: bold;
+            z-index: 200;
+            border-radius: 2px;
+        }
+        
+        .news-container ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            animation: scroll 25s infinite linear;
+        }
+        
+        .news-container ul li {
+            font-size: small;
+            font-family: 'Times New Roman', Times, serif;
+            white-space: nowrap;
+            padding: 10px 24px;
+            color: rgb(9, 219, 255);
+            position: relative;
+        }
+        
+        .news-container ul li::after {
+            content: "";
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        .news-container ul li:last-child::after {
+            display: none;
+        }
+        
+        @keyframes scroll {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-1083px);
+            }
+        }
+
+
+
+
+
+
+        
     </style>
 </head>
 
@@ -283,7 +358,7 @@
     <div class="ball" style="display: none;"></div>
 
 
-    <div class="container">
+    <div class="containerBTN">
         <div class="box">
             <span></span>
             <a class="link" href="https://ministro97.github.io/StatDex/IVsPredict.html" class="clickable-area">IVS  PREDICT</a>
@@ -319,6 +394,29 @@
 
 
 
+        <div class="container">
+            <div class="news-container">
+                <div class="title">
+                    Dr. Min adv
+                </div>
+
+                <ul>
+                    <li>
+                        <b>Pietratante:</b>
+                    </li>
+
+                    <li>
+                        Lorem ipsum dolor sit
+                    </li>
+
+                    <li>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam!
+                    </li>
+                </ul>
+            </div>
+
+
+            <br><br>
 
 
 
@@ -333,7 +431,7 @@
             link.addEventListener('click', function(event) {
                 event.preventDefault(); // Previene il comportamento predefinito del link
                 document.getElementsByClassName('ball')[0].style.display = "block";
-
+     document.getElementsByClassName('containerBTN')[0].style.display = "none";
                 document.getElementsByClassName('container')[0].style.display = "none";
                 document.getElementById('containerTitle').style.display = "none";
                 const requestIndicator = document.querySelector('.request-indicator');
@@ -349,6 +447,7 @@
      setTimeout(() => {
                             document.getElementsByClassName('ball')[0].style.display = "none";
                             document.getElementsByClassName('container')[0].style.display = "block";
+              document.getElementsByClassName('containerBTN')[0].style.display = "block";
                             document.getElementById('containerTitle').style.display = "block";
                         },
                         10000);
