@@ -40,7 +40,14 @@
             color: white;
         }
         
-        
+        h1 {
+  font-size: 2em;
+  color: #00e6e6;
+  text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6;
+  margin: 20px 0;
+ 
+}
+
         /* Stile per la tabella */
 /* Stile per la tabella */
 /* Stile per la tabella */
@@ -125,6 +132,7 @@ button {
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
 
 button:hover {
@@ -193,6 +201,8 @@ div {
     </style>
 </head>
 <body>
+  
+  <h1>IVS PREDICT</h1>
     <br>
     <label for="pokemon">Nome del Pokémon:</label>
     <input type="text" id="pokemon" name="pokemon">
@@ -253,7 +263,7 @@ div {
       <!-- Opzioni generate dinamicamente da JavaScript -->
     </select>
     <br>
-    <button onclick="calcolaStatisticaPokemon()">Calcola</button>
+    <button onclick="calcolaStatisticaPokemon()">Prevedi</button>
     <div id="risultato"></div>
     
   <select id="differenza">
@@ -267,7 +277,7 @@ div {
 
     
     <div id="risultato1"></div>
-<button onclick="calcolaLivelloPerDifferenzaIV()">Calcola Livello per Differenza IV</button>
+<button onclick="calcolaLivelloPerDifferenzaIV()">Prevedi Livello per Differenza IV</button>
 
     <button id="exportTableCSV">Esporta Tabella in CSV</button>
 
