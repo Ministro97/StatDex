@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVs predict</title>
+    <title>IV table calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,11 +45,11 @@
 /* Stile per la tabella */
 /* Stile per la tabella */
 table {
-    width: 80%; /* Riduce la larghezza della tabella */
+    width: 100%; /* Riduce la larghezza della tabella */
     margin: 20px auto; /* Centra la tabella */
     border-collapse: collapse;
-    font-size: 0.9em; /* Riduce la dimensione del testo */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20em; /* Riduce la dimensione del testo */
+    font-family: 'Times New Roman', Times, serif;
     background-color: #2c2c2c; /* Colore di sfondo più chiaro */
     color: #ffffff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -63,7 +63,7 @@ table thead tr {
 }
 
 table th, table td {
-    padding: 8px 10px; /* Riduce il padding */
+    padding: 8px 15px; /* Riduce il padding */
     border: 1px solid #00FFFF; /* Neon azzurro */
 }
 
@@ -151,7 +151,7 @@ input[type="text"]::placeholder {
 body {
     background: linear-gradient(135deg, #1e1e1e 25%, #2c2c2c 100%);
     color: #ffffff;
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -173,25 +173,31 @@ div {
     box-sizing: border-box;
 }
 
-          h1 {
-            font-size: 2em;
-            color: #00e6e6;
-            text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6;
-            margin: 20px 0;
-        } 
         
-        
+       table {
+  width: 100%; /* Riduce la larghezza della tabella al 50% del contenitore */
+  font-size: 10px; /* Riduce la dimensione del testo all'interno della tabella */
+  border-collapse: collapse;
+}
+        <style>
+    .selected {
+        border: 2px solid green;
+    }
+
+    td:hover {
+        border: 5px solid lightgreen;
+    }
+</style>
+
         
     </style>
 </head>
 <body>
-
-    <h1>IVs predict</h1>
     <br>
     <label for="pokemon">Nome del Pokémon:</label>
     <input type="text" id="pokemon" name="pokemon">
     <br>
-    <label for="statistica">Statistica:</label>
+    <label for="statistica">Statistica da calcolare:</label>
     <select id="statistica" name="statistica">
       <<option value=""></option>
         <option value="hp">PS</option>
@@ -223,7 +229,7 @@ div {
         <option value="placida">Placida</option>
         <option value="prepotente">Prepotente</option>
         <option value="prudente">Prudente</option>
-        <option value="quiete">Quieta</option>
+        <option value="quieta">Quieta</option>
         <option value="ritrosa">Ritrosa</option>
         <option value="scaltra">Scaltra</option>
         <option value="schiva">Schiva</option>
@@ -247,7 +253,7 @@ div {
       <!-- Opzioni generate dinamicamente da JavaScript -->
     </select>
     <br>
-    <button onclick="calcolaStatisticaPokemon()">Prevedi</button>
+    <button onclick="calcolaStatisticaPokemon()">Calcola</button>
     <div id="risultato"></div>
     
   <select id="differenza">
@@ -261,14 +267,15 @@ div {
 
     
     <div id="risultato1"></div>
-<button onclick="calcolaLivelloPerDifferenzaIV()">Prevedi livello per differenza IV</button>
+<button onclick="calcolaLivelloPerDifferenzaIV()">Calcola Livello per Differenza IV</button>
 
     <button id="exportTableCSV">Esporta Tabella in CSV</button>
 
 
+
 <div class="table-container">
   
-    <table>
+    <table id="dynamicTable">
         <!-- Contenuto della tabella -->
     </table>
     
@@ -279,6 +286,11 @@ div {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <script>
+    
+    
+    
+    
+    
     
   
     document.getElementById('exportTableCSV').addEventListener('click', function() {
@@ -369,9 +381,10 @@ div {
 }
 
 
-async function calcolaStatisticaPokemon() {
-  
+let count
 
+async function calcolaStatisticaPokemon() {
+  count = 0
     const pokemonName = document.getElementById('pokemon').value.toLowerCase();
     const statistica = document.getElementById('statistica').value;
     const natura = document.getElementById('natura').value.toLowerCase();
@@ -379,12 +392,10 @@ async function calcolaStatisticaPokemon() {
     const valoreStatisticaInput = parseInt(document.getElementById('valoreStatistica').value);
 
     const data = await getPokemonData(pokemonName);
-
     const baseStat = data.stats.find(stat => stat.stat.name === statistica)?.base_stat;
-
     const EV = 0;
 
-    let risultati = '<table><tr><th>Livello</th>';
+    let risultati = '<table id="Table1"><tr><th>Livello</th>';
     for (let IV = 0; IV <= 31; IV++) {
         risultati += `<th>IV ${IV}</th>`;
     }
@@ -407,24 +418,46 @@ async function calcolaStatisticaPokemon() {
 
     risultati += '</table>';
     document.getElementById('risultato').innerHTML = risultati;
-}
 
-        
-        document.addEventListener('DOMContentLoaded', () => {
-        const livelloSelect = document.getElementById('livello');
+    // Aggiungi l'evento di click alle celle della tabella con ID "Table1"
+    const table = document.getElementById('Table1');
+    const headers = table.querySelectorAll('th');
 
-        // Popola il selettore del livello
-        for (let i = 1; i <= 100; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            livelloSelect.appendChild(option);
+    table.addEventListener('click', function(event) {
+        const cell = event.target;
+        if (cell.tagName.toLowerCase() === 'td') {
+            const cellIndex = cell.cellIndex;
+            const headerText = headers[cellIndex].textContent;
+
+            // Verifica se l'intestazione contiene la parola "IV"
+            if (headerText.includes('IV') && count === 0) {
+                // Cambia il colore del bordo e dello sfondo della cella selezionata
+                cell.style.border = '2px solid #8A2BE2'; // Viola shock
+                cell.style.backgroundColor = '#8A2BE2'; // Viola shock
+
+                // Mostra l'alert
+                alert('Intestazione: ' + headerText);
+
+                // Ripristina il colore originale dopo l'alert
+                cell.style.border = '';
+                cell.style.backgroundColor = '';
+            }
         }
     });
-        
-      
-      
-      
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const livelloSelect = document.getElementById('livello');
+
+    // Popola il selettore del livello
+    for (let i = 1; i <= 100; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        livelloSelect.appendChild(option);
+    }
+});
+
     
     
   
@@ -548,6 +581,11 @@ async function calcolaStatisticaPokemon() {
 
 
 async function livelloPerDifferenzaIV(pokemonName, statistica, natura, differenza) {
+  
+  
+  
+  
+  
     try {
         const data = await getPokemonData(pokemonName);
         if (!data) {
@@ -592,9 +630,13 @@ async function livelloPerDifferenzaIV(pokemonName, statistica, natura, differenz
             stat29 = Math.floor(stat29);
             stat30 = Math.floor(stat30);
             stat31 = Math.floor(stat31);
+            
+           
 
             const row = document.createElement('tr');
             row.innerHTML = `
+            
+            
            
             <td>${livello}</td> 
           
@@ -666,6 +708,7 @@ function getNatureModifiers(natura) {
 }
 
 function calcolaLivelloPerDifferenzaIV() {
+  count = 1 
     const pokemonName = document.getElementById('pokemon').value.toLowerCase();
     const statistica = document.getElementById('statistica').value;
     const natura = document.getElementById('natura').value.toLowerCase();
@@ -679,6 +722,30 @@ function calcolaLivelloPerDifferenzaIV() {
     }
 }
 
+
+
+
+
+
+  
+      
+      document.addEventListener('DOMContentLoaded', function() {
+    const table = document.getElementById('dynamicTable'); // Assicurati che la tua tabella abbia l'ID 'dynamicTable'
+    const headers = table.querySelectorAll('th');
+
+    table.addEventListener('click', function(event) {
+        const cell = event.target.closest('td');
+        if (cell && count === 0 ) {
+         
+            const cellIndex = cell.cellIndex;
+            const headerText = headers[cellIndex].textContent;
+            alert('Intestazione: ' + headerText);
+        }
+    });
+});
+
     </script>
+
+
 </body>
 </html>
