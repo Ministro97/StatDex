@@ -461,4 +461,82 @@ a{
         background-position: -200% 0;
     }
 }
- 
+
+
+
+
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .card-header {
+    height: 180px;
+  }
+
+  .card-avatar {
+    width: 80px;
+    height: 80px;
+    transform: translateX(-50%) translateY(-50px);
+  }
+
+  .card-fullname {
+    font-size: 20px;
+  }
+
+  .card-jobtitle {
+    font-size: 12px;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .card-buttons {
+    flex-direction: column;
+  }
+
+  .card-buttons button {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 5px;
+  }
+
+  .card-header {
+    height: 140px;
+  }
+
+  .card-avatar {
+    width: 60px;
+    height: 60px;
+    transform: translateX(-50%) translateY(-30px);
+  }
+
+  .card-fullname {
+    font-size: 18px;
+  }
+
+  .card-jobtitle {
+    font-size: 10px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card-buttons {
+    flex-direction: column;
+  }
+
+  .card-buttons button {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+}
