@@ -69,5 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
+function redirectToTG() {
+    window.location.href = 'https://t.me/+Sb8ZrVh__rw1Zjc0';
+}
 
