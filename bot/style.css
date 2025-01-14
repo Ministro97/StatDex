@@ -6,7 +6,9 @@
 
 
 
-
+* {
+  box-sizing: border-box;
+}
 
 
 
@@ -19,13 +21,13 @@ body {
 
 
   min-height: 100vh;
-  
+  display: flex;
+  flex-wrap: wrap;
   padding: 20px;
 }
 
 .card {
-  width: 80%; 
-  
+  max-width: 365px;
   margin: auto;
   overflow-y: auto;
   position: relative;
@@ -454,16 +456,11 @@ a{
 }
 
 @keyframes shine {
+  
     0% {
         background-position: 200% 0;
     }
-
     100% {
         background-position: -200% 0;
     }
 }
-
-
-
-
-
